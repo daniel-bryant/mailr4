@@ -1,0 +1,42 @@
+<% provide(:title, 'signup') %>
+<h1>Create a new SNEL account.</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :name, "Username" %>
+      <%= f.text_field :name %>
+
+      <%= f.label :first %>
+      <%= f.text_field :first %>
+
+      <%= f.label :last %>
+      <%= f.text_field :last %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+
+      <%= f.label :birthday %>
+      <%= f.date_select :birthday %>
+
+      <%= f.label :gender %>
+      <%= f.select :gender, ["M","F"], { include_blank: true } %>
+
+      <%= f.label :phone, "Mobile Phone" %>
+      <%= f.text_field :phone %>
+
+      <%= f.label :email, "Backup Email" %>
+      <%= f.text_field :email %>
+
+      <%= f.label :country %>
+      <%= f.select :country, ["United States of America", "Canada"], { include_blank: true } %>
+
+      <%= f.submit "Create Account", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

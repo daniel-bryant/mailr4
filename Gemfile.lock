@@ -37,6 +37,9 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.0)
     atomic (1.1.13)
+    bcrypt-ruby (3.0.1)
+    bootstrap-sass (2.3.2.1)
+      sass (~> 3.2)
     bson (1.9.2)
     bson_ext (1.9.2)
       bson (~> 1.9.2)
@@ -160,6 +163,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby (~> 3.0.0)
+  bootstrap-sass
   bson_ext
   capybara (= 2.1.0)
   coffee-rails (~> 4.0.0)

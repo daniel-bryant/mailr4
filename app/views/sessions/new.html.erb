@@ -1,0 +1,17 @@
+<% provide(:title, 'signin') %>
+<h1>SNEL</h1>
+<div class="row sign-in">
+  <div class="span6 offset3">
+    <%= form_for(:session, url: sessions_path) do |f| %>
+
+      <%= f.label :name, "Username" %>
+      <%= f.text_field :name %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+    <% end %>
+    
+  </div>
+</div>

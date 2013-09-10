@@ -1,5 +1,10 @@
 == README
 
+This is my predecessor to the Ruby on Rails open source mail app "mailr."
+The purpose of this app is to serve as a simple mail app for my website
+as well as a point of reference to myself and others for simple tasks such
+as creating users and using mongoid.
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

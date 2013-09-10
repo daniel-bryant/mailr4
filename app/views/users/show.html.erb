@@ -1,0 +1,37 @@
+<% provide(:title, 'mail') %>
+<div id="mail-wrap">
+  <div id="sidebar">
+    <ul>
+      <li><%= link_to "Compose", '#', class: "btn btn-primary" %></li>
+      <li><%= link_to "Inbox", '#' %></li>
+      <li><%= link_to "Starred", '#' %></li>
+      <li><%= link_to "Sent", '#' %></li>
+      <li><%= link_to "Drafts", '#' %></li>
+    </ul> 
+  </div>
+  <div id="content">
+    <div id="button-row">
+      <div class="left">
+        <a href="#" class="btn"><i class="icon-ok"></i></a>
+        <a href="#" class="btn"><i class="icon-refresh"></i></a>
+        <a href="#" class="btn"><i class="icon-trash"></i></a>
+      </div>
+      <div class="right">
+        0-0 of 0
+        <div class="btn-group">
+        <a href="#" class="btn"><i class="icon-chevron-left"></i></a>
+        <a href="#" class="btn"><i class="icon-chevron-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <ul id="message-list">
+      <% (0..50).each do |i| %>
+        <li>
+          <div class="from">from</div>
+          <div class="subject">subject<div class="date">date</div></div>
+        </li>
+      <% end %>  
+    </ul>
+  </div>
+  <div class="bottom-clear"></div>
+</div>

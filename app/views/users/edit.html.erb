@@ -1,0 +1,34 @@
+<% provide(:title, 'mail') %>
+<h1>Edit SNEL account.</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :first %>
+      <%= f.text_field :first %>
+
+      <%= f.label :last %>
+      <%= f.text_field :last %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+
+      <%= f.label :phone, "Mobile Phone" %>
+      <%= f.text_field :phone %>
+
+      <%= f.label :email, "Backup Email" %>
+      <%= f.text_field :email %>
+
+      <%= f.label :country %>
+      <%= f.select :country, ["United States of America", "Canada"], { include_blank: true } %>
+
+      <%= f.submit "Save Changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
