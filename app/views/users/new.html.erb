@@ -21,20 +21,8 @@
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation %>
 
-      <%= f.label :birthday %>
-      <%= f.date_select :birthday %>
-
-      <%= f.label :gender %>
-      <%= f.select :gender, ["M","F"], { include_blank: true } %>
-
-      <%= f.label :phone, "Mobile Phone" %>
-      <%= f.text_field :phone %>
-
       <%= f.label :email, "Backup Email" %>
       <%= f.text_field :email %>
-
-      <%= f.label :country %>
-      <%= f.select :country, ["United States of America", "Canada"], { include_blank: true } %>
 
       <%= f.submit "Create Account", class: "btn btn-large btn-primary" %>
     <% end %>

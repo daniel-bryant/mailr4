@@ -5,6 +5,11 @@ The purpose of this app is to serve as a simple mail app for my website
 as well as a point of reference to myself and others for simple tasks such
 as creating users and using mongoid.
 
+Requirements:
+Rails 4.0.0
+Ruby 2.0.0
+MongoDB - the most recent version should be fine
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
