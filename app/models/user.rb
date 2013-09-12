@@ -20,4 +20,7 @@ class User
   validates :email,    presence: true, format: { with: VALID_EMAIL_REGEX }
   has_secure_password
   validates :password, length: { minimum: 8 }
+
+  # Relations
+  embeds_many :emails, dependent: :destroy
 end

@@ -1,0 +1,15 @@
+<%= form_for(@new_email) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label "To" %>
+  <%= f.text_field :to %>
+
+  <%= f.label "Subject" %>
+  <%= f.text_field :subject %>
+
+  <div class="field">
+    <%= f.text_area :content, placeholder: "Compose new email..." %>
+  </div>
+
+  <%= f.submit "Send", class: "btn btn-large btn-primary" %>
+<% end %>

@@ -1,3 +1,78 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* variables */
+$msgHeight: 2.2em;
+$sideWidth: 180px;
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.bottom-clear {
+  clear: both;
+}
+
+#sidebar {
+  float: left;
+  width: $sideWidth;
+  position: fixed;
+}
+
+#sidebar ul li {
+  margin-bottom: 12px;
+}
+
+#content {
+  margin: 0 0 0 $sideWidth;
+}
+
+#button-row {
+  height: 30px;
+  margin-bottom: 15px;
+}
+
+.button-row {
+  width: 100%;
+}
+
+#message-list {
+   border-bottom: 1px solid #999;
+}
+
+#message-list li {
+  height: $msgHeight;
+  background-color: #eee;
+  border-top: 1px solid #999;
+}
+
+#message-list li div {
+  line-height: $msgHeight; /* center text */
+}
+
+.from {
+  display: inline-block;
+  width: 20%;
+}
+
+.subject {
+  display: inline-block;
+  width: 79%;
+}
+
+.date {
+  width: 5em;
+  float: right;
+  text-align: right;
+}
+

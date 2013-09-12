@@ -6,7 +6,7 @@
       <li><%= link_to "Inbox", '#' %></li>
       <li><%= link_to "Starred", '#' %></li>
       <li><%= link_to "Sent", '#' %></li>
-      <li><%= link_to "Drafts", '#' %></li>
+      <li><%= link_to "Drafts (#{@user.emails.count})", '#' %></li>
     </ul> 
   </div>
   <div id="content">
@@ -31,7 +31,14 @@
           <div class="subject">subject<div class="date">date</div></div>
         </li>
       <% end %>  
+
+      <% if @user.emails.any? %>
+        <ol class="drafts">
+          <%= render @drafts %>
+        </ol>
+      <% end %>
     </ul>
   </div>
+  <%= render 'users/compose_form' %>
   <div class="bottom-clear"></div>
 </div>

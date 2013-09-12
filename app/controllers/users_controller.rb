@@ -4,6 +4,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @drafts = @user.emails
+    @new_email = Email.new(from: @user.name)
     mail_setup
     #@emails = Mail.all
   end
@@ -17,7 +19,7 @@ class UsersController < ApplicationController
     if @user.save
       sign_in @user
       flash[:success] = "Welcome to your new secure mailbox!"
-      redirect_to mail_path
+      redirect_to @user
     else
       render 'new'
     end
@@ -62,7 +64,7 @@ class UsersController < ApplicationController
         retriever_method :pop3, :address    => "pop.gmail.com",
                                 :port       => 995,
                                 :user_name  => 'bryant.daniel.j@gmail.com',
-                                :password   => 'fibonacci',
+                                :password   => '',
                                 :enable_ssl => true
       end
     end
