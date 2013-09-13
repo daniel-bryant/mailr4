@@ -15,5 +15,5 @@ class Email
   # Relations
   embedded_in :user, inverse_of: :emails
 
-  default_scope -> { order('updated_at DESC') }
+  default_scope order_by(updated_at: :desc)
 end

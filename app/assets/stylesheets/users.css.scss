@@ -5,6 +5,7 @@
 /* variables */
 $msgHeight: 2.2em;
 $sideWidth: 180px;
+$globalMargin: 50px;
 
 .left {
   float: left;
@@ -76,3 +77,10 @@ ul {
   text-align: right;
 }
 
+.compose-box {
+  width: 400px;
+  background-color: white;
+  position: fixed;
+  bottom: 0%;
+  right: $globalMargin;
+}

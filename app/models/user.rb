@@ -22,5 +22,5 @@ class User
   validates :password, length: { minimum: 8 }
 
   # Relations
-  embeds_many :emails, dependent: :destroy
+  embeds_many :emails
 end
