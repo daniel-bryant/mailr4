@@ -1,11 +1,11 @@
 <%= form_for(@new_email) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label "To" %>
-  <%= f.text_field :to %>
+  <%= f.text_field :from, placeholder: "#{current_user.name}@#{CONFIG['domain']}" %>
 
-  <%= f.label "Subject" %>
-  <%= f.text_field :subject %>
+  <%= f.text_field :to, placeholder: "To" %>
+
+  <%= f.text_field :subject, placeholder: "Subject" %>
 
   <div class="field">
     <%= f.text_area :body, placeholder: "Compose new email..." %>

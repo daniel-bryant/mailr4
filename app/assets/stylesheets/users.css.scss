@@ -7,6 +7,10 @@ $msgHeight: 2.2em;
 $sideWidth: 180px;
 $globalMargin: 50px;
 
+#mail-wrap {
+  clear: both;
+}
+
 .left {
   float: left;
 }
@@ -24,40 +28,37 @@ ul {
   clear: both;
 }
 
-#sidebar {
+.sidebar {
   float: left;
   width: $sideWidth;
-  position: fixed;
 }
 
-#sidebar ul li {
+.sidebar div, .sidebar ul li {
   margin-bottom: 12px;
 }
 
-#content {
+.content {
   margin: 0 0 0 $sideWidth;
 }
 
 #button-row {
   height: 30px;
+  width: 100%;
   margin-bottom: 15px;
 }
 
-.button-row {
-  width: 100%;
-}
 
-#message-list {
+.message-list {
    border-bottom: 1px solid #999;
 }
 
-#message-list li {
+.message-list li {
   height: $msgHeight;
   background-color: #eee;
   border-top: 1px solid #999;
 }
 
-#message-list li div {
+.message-list li div {
   line-height: $msgHeight; /* center text */
 }
 
@@ -78,9 +79,17 @@ ul {
 }
 
 .compose-box {
-  width: 400px;
+  width: 500px;
   background-color: white;
+  border-style: solid solid none solid;
+  border-width: 1px;
   position: fixed;
   bottom: 0%;
   right: $globalMargin;
+}
+
+.compose-top {
+  width: 100%;
+  background-color: black;
+  color: white;
 }

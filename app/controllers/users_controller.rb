@@ -4,10 +4,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @drafts = @user.emails
-    @new_email = Email.new(from: @user.name)
     mail_setup
-    #@emails = Mail.all
+    #@inboxes = Mail.all
+    #@sents = Mail.sent?
+    @drafts = current_user.emails
+    @new_email = current_user.emails.build if signed_in?
+    mail_setup
   end
 
   def new

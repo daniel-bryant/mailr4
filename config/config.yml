@@ -1,0 +1,8 @@
+production:
+    domain: example.com
+
+development:
+    domain: example.com
+
+test:
+    domain: example.com
