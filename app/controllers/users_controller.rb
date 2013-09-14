@@ -59,7 +59,7 @@ class UsersController < ApplicationController
         retriever_method :pop3, :address    => "pop.gmail.com",
                                 :port       => 995,
                                 :user_name  => 'bryant.daniel.j@gmail.com',
-                                :password   => 'fibonacci',
+                                :password   => '',
                                 :enable_ssl => true
       end
     end
