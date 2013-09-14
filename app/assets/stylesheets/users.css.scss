@@ -7,10 +7,6 @@ $msgHeight: 2.2em;
 $sideWidth: 180px;
 $globalMargin: 50px;
 
-#mail-wrap {
-  clear: both;
-}
-
 .left {
   float: left;
 }
@@ -47,7 +43,6 @@ ul {
   margin-bottom: 15px;
 }
 
-
 .message-list {
    border-bottom: 1px solid #999;
 }
@@ -73,12 +68,10 @@ ul {
 }
 
 .date {
-  width: 5em;
   float: right;
-  text-align: right;
 }
 
-.compose-box {
+#compose-box {
   width: 500px;
   background-color: white;
   border-style: solid solid none solid;
@@ -88,8 +81,11 @@ ul {
   right: $globalMargin;
 }
 
-.compose-top {
+#compose-top {
   width: 100%;
   background-color: black;
   color: white;
 }
+
+div.hidden { display: none; }
+

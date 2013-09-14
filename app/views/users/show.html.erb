@@ -2,7 +2,15 @@
 <div id="mail-wrap">
   <div id="button-row">
     <div class="sidebar">
-      <%= link_to "Compose", '#', class: "btn btn-primary" %>
+      <a href="#" id="show-compose" class="btn btn-primary">Compose</a>
+      <script>
+        $(function() {
+          $('a#show-compose').click(function(event){
+            event.preventDefault();
+            $('div#compose-box').toggle();
+          });
+        });
+      </script>
     </div>
 
     <div class="content">
@@ -24,8 +32,6 @@
 
   </div>
 
-
-
   <div class="tabbable tabs-left">
     <ul class="nav nav-tabs sidebar">
       <li class="active"><a href="#inbox" data-toggle="tab">Inbox</a></li>
@@ -35,22 +41,40 @@
     </ul> 
 
     <div class="tab-content content">
-      <div class="tab-pane active" id="inbox">hello inbox</div>
-      <div id="starred" class="tab-pane">hello starred</div>
-      <div id="sent" class="tab-pane">hello sent</div>
+      <div id="inbox" class="tab-pane active">
+        <% if @in_mails.any? %>
+          <ul class="message-list">
+            <%= render partial: 'emails/in_mail', collection: @in_mails %>
+          </ul>
+        <% else %>
+          <ul class="center">Nothing here</ul>
+        <% end %>
+      </div>
+
+      <div id="starred" class="tab-pane">
+        <ul class="center">Nothing here</ul>
+      </div>
+
+      <div id="sent" class="tab-pane">
+        <ul class="center">Nothing here</ul>
+      </div>
+
       <div id="drafts" class="tab-pane">
         <% if @user.emails.any? %>
-          <ul class="message-list drafts">
+          <ul class="message-list">
             <%= render @drafts %>
           </ul>
+        <% else %>
+          <ul class="center">Nothing here</ul>
         <% end %>
       </div>
     </div>
+
   </div>
 
   <div class="bottom-clear"></div>
-  <div class="compose-box">
-    <div class="compose-top">
+  <div id="compose-box" class="hidden">
+    <div id="compose-top">
       New Message
     </div>
     <%= render 'users/compose_form' %>

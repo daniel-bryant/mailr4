@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     mail_setup
-    #@inboxes = Mail.all
+    @in_mails = Mail.all
     #@sents = Mail.sent?
     @drafts = current_user.emails
     @new_email = current_user.emails.build if signed_in?
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
         retriever_method :pop3, :address    => "pop.gmail.com",
                                 :port       => 995,
                                 :user_name  => 'bryant.daniel.j@gmail.com',
-                                :password   => '',
+                                :password   => 'fibonacci',
                                 :enable_ssl => true
       end
     end
