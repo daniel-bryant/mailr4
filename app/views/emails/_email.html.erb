@@ -1,11 +1,12 @@
-<li>
-  <div class="from">
-    <%= email.to %>
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapse4">
+      <%= email.subject %>
+    </a>
   </div>
-  <div class="subject">
-    <%= email.subject %>
-    <div class="date">
-      <%= email.updated_at %>
+  <div id="collapse4" class="accordion-body collapse in">
+    <div class="accordion-inner">
+      <%= email.subject %>
     </div>
   </div>
-</li>
+</div>

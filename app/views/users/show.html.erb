@@ -42,32 +42,53 @@
 
     <div class="tab-content content">
       <div id="inbox" class="tab-pane active">
-        <% if @in_mails.any? %>
-          <ul class="message-list">
-            <%= render partial: 'emails/in_mail', collection: @in_mails %>
-          </ul>
-        <% else %>
-          <ul class="center">Nothing here</ul>
-        <% end %>
+        <div class="accordion" id="accordion1">
+          <% if false %> <!--replace with: @in_mails.any?-->
+            <ul class="message-list">
+              <%= render partial: 'emails/in_mail', collection: @in_mails %>
+            </ul>
+          <% else %>
+            <div class="center">Nothing here</div>
+          <% end %>
+        </div>
       </div>
 
       <div id="starred" class="tab-pane">
-        <ul class="center">Nothing here</ul>
+        <div class="accordion" id="accordion2">
+          <% if false %>
+            <ul class="message-list">
+              
+            </ul>
+          <% else %>
+            <div class="center">Nothing here</div>
+          <% end %>
+        </div>
       </div>
 
       <div id="sent" class="tab-pane">
-        <ul class="center">Nothing here</ul>
+        <div class="accordion" id="accordion3">
+          <% if false %>
+            <ul class="message-list">
+              
+            </ul>
+          <% else %>
+            <div class="center">Nothing here</div>
+          <% end %>
+        </div> 
       </div>
 
       <div id="drafts" class="tab-pane">
-        <% if @user.emails.any? %>
-          <ul class="message-list">
-            <%= render @drafts %>
-          </ul>
-        <% else %>
-          <ul class="center">Nothing here</ul>
-        <% end %>
+        <div class="accordion" id="accordion4">
+          <% if @user.emails.any? %>
+            <ul class="message-list">
+              <%= render @drafts %>
+            </ul>
+          <% else %>
+            <div class="center">Nothing here</div>
+          <% end %>
+        </div>
       </div>
+
     </div>
 
   </div>
