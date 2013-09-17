@@ -43,7 +43,7 @@
     <div class="tab-content content">
       <div id="inbox" class="tab-pane active">
         <div class="accordion" id="accordion1">
-          <% if false %> <!--replace with: @in_mails.any?-->
+          <% if @in_mails.any? %> <!--replace with: false-->
             <ul class="message-list">
               <%= render partial: 'emails/in_mail', collection: @in_mails %>
             </ul>
@@ -97,6 +97,9 @@
   <div id="compose-box" class="hidden">
     <div id="compose-top">
       New Message
+      <div class="right">
+        <a href="#" class="btn btn-mini"><i class="icon-remove"></i></a>
+      </div>
     </div>
     <%= render 'users/compose_form' %>
   </div>
