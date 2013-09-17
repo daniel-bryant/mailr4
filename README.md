@@ -24,15 +24,17 @@ The purpose of this app is to serve as a simple mail app, as well as a point of 
 
   <tt>$ rails s</tt>
 
-  * goto localhost:3000 in browser
+  <tt>$ #goto localhost:3000 in browser</tt>
 
   <tt>$ sudo service mongodb stop</tt>
 
-  * if you get the following error: Could not connect to any secondary or primary nodes
+--Error: Could not connect to any secondary or primary nodes
   for replica set <Moped::Cluster nodes=[<Moped::Node resolved_address="127.0.0.1:27017">
   , run:
 
   <tt>$ sudo rm /var/lib/mongodb/mongod.lock</tt>
+
   <tt>$ mongod --repair</tt>
+
   <tt>$ sudo service mongodb start</tt>
 
