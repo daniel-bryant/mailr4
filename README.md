@@ -1,55 +1,36 @@
-== README
+This is my predecessor to the Ruby on Rails, open source mail app, "mailr."
 
-This is my predecessor to the Ruby on Rails open source mail app "mailr."
-The purpose of this app is to serve as a simple mail app for my website
-as well as a point of reference to myself and others for simple tasks such
-as creating users and using mongoid.
+https://github.com/lmanolov/mailr
+
+The purpose of this app is to serve as a simple mail app, as well as a point of reference for myself and others for simple tasks such as creating a user database with mongoid.
+
+--Release
+  Currently in production. However, the most recent github version should be runnable.
 
 --Requirements:
-Rails 4.0.0
-Ruby 2.0.0
-MongoDB - the most recent version should be fine
 
---Running(Assuming Linux):
-$ cd location/of/mailr4
-$ sudo service mongodb start
-$ rails s
-goto localhost:3000 in browser
-$ sudo service mongodb stop
+  Rails 4.0.0
 
-if you get the following error:
-Could not connect to any secondary or primary nodes for replica set
-<Moped::Cluster nodes=[<Moped::Node
-resolved_address="127.0.0.1:27017">]>
-run:
-$ sudo rm /var/lib/mongodb/mongod.lock
-$ mongod --repair
-$ sudo service mongodb start
+  Ruby 2.0.0
 
+  MongoDB >= 2.4.6
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+--Running from command line (Linux):
+  <tt>$ cd location/of/mailr4</tt>
 
-Things you may want to cover:
+  <tt>$ sudo service mongodb start</tt>
 
-* Ruby version
+  <tt>$ rails s</tt>
 
-* System dependencies
+  goto localhost:3000 in browser
 
-* Configuration
+  <tt>$ sudo service mongodb stop</tt>
 
-* Database creation
+  if you get the following error: Could not connect to any secondary or primary nodes for replica set <Moped::Cluster nodes=[<Moped::Node resolved_address="127.0.0.1:27017">]>
 
-* Database initialization
+  run:
 
-* How to run the test suite
+  <tt>$ sudo rm /var/lib/mongodb/mongod.lock</tt>
+  <tt>$ mongod --repair</tt>
+  <tt>$ sudo service mongodb start</tt>
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
