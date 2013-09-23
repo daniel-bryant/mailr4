@@ -5,11 +5,11 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     mail_setup
-    @in_mails = Mail.all
-    #@sents = Mail.sent?
-    @drafts = current_user.emails
-    @new_email = current_user.emails.build if signed_in?
-    mail_setup
+    @in_mail = @user.inmails
+    @out_mail = @user.outmails
+    @draft_mail = current_user.draftmails
+    #@new_mail = current_user.outmails.build if signed_in?
+    @new_mail = Email.new(from: "test@test.com")
   end
 
   def new

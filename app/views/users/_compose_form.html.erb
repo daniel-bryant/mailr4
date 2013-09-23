@@ -1,4 +1,4 @@
-<%= form_for(@new_email) do |f| %>
+<%= form_for(@new_mail) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
   <%= f.text_field :from, placeholder: "#{current_user.name}@#{CONFIG['domain']}" %>

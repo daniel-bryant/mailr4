@@ -11,4 +11,12 @@ module ApplicationHelper
 
     end
   end
+
+  def count_in_paren(n)
+    if n>0
+      "(#{n})" 
+    else
+      "(#{n})"
+    end
+  end
 end

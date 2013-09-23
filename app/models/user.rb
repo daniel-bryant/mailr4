@@ -22,5 +22,7 @@ class User
   validates :password, length: { minimum: 8 }
 
   # Relations
-  embeds_many :emails
+  embeds_many :inmails
+  embeds_many :outmails
+  embeds_many :draftmails
 end

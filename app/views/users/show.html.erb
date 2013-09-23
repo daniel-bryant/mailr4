@@ -35,17 +35,17 @@
   <div class="tabbable tabs-left">
     <ul class="nav nav-tabs sidebar">
       <li class="active"><a href="#inbox" data-toggle="tab">Inbox</a></li>
-      <li><a href="#starred" data-toggle="tab">Starred</a></li>
-      <li><a href="#sent" data-toggle="tab">Sent</a></li>
-      <li><a href="#drafts" data-toggle="tab">Drafts(<%= @user.emails.count %>)</a></li>
+      <li><a href="#starred" data-toggle="tab">Starred<%= count_in_paren(@in_mail.count) %></a></li>
+      <li><a href="#sent" data-toggle="tab">Sent<%= count_in_paren(@out_mail.count) %></a></li>
+      <li><a href="#drafts" data-toggle="tab">Drafts<%= count_in_paren(@draft_mail.count) %></a></li>
     </ul> 
 
     <div class="tab-content content">
       <div id="inbox" class="tab-pane active">
         <div class="accordion" id="accordion1">
-          <% if @in_mails.any? %> <!--replace with: false-->
+          <% if @in_mail.any? %>
             <ul class="message-list">
-              <%= render partial: 'emails/in_mail', collection: @in_mails %>
+              <%= render @in_mail %>
             </ul>
           <% else %>
             <div class="center">Nothing here</div>
@@ -55,7 +55,7 @@
 
       <div id="starred" class="tab-pane">
         <div class="accordion" id="accordion2">
-          <% if false %>
+          <% if  %>
             <ul class="message-list">
               
             </ul>
@@ -67,9 +67,9 @@
 
       <div id="sent" class="tab-pane">
         <div class="accordion" id="accordion3">
-          <% if false %>
+          <% if @out_mail.any? %>
             <ul class="message-list">
-              
+              <%= render @out_mail %>
             </ul>
           <% else %>
             <div class="center">Nothing here</div>
@@ -79,9 +79,9 @@
 
       <div id="drafts" class="tab-pane">
         <div class="accordion" id="accordion4">
-          <% if @user.emails.any? %>
+          <% if @draft_mail.any? %>
             <ul class="message-list">
-              <%= render @drafts %>
+              <%= render @draft_mail %>
             </ul>
           <% else %>
             <div class="center">Nothing here</div>

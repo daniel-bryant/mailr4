@@ -12,8 +12,5 @@ class Email
   validates :to,   presence: true, format: { with: VALID_EMAIL_REGEX }
   validates :body, presence: true
 
-  # Relations
-  embedded_in :user, inverse_of: :emails
-
-  default_scope order_by(updated_at: :desc)
+  #default_scope order_by(updated_at: :desc)
 end
