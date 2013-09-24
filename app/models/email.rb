@@ -1,16 +1,22 @@
 class Email
   include Mongoid::Document
   include Mongoid::Timestamps
-  field :from, type: String
-  field :to, type: String
+  field :box,     type: Integer #inbox-1, sent-2, drafts-3
+  field :star,    type: Boolean
+  field :from,    type: String
+  field :to,      type: String
   field :subject, type: String
-  field :body, type: String
+  field :body,    type: String
+  field :date,    type: String
 
   # Validations
+  validates :box,  presence: true
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :from, presence: true, format: { with: VALID_EMAIL_REGEX }
   validates :to,   presence: true, format: { with: VALID_EMAIL_REGEX }
   validates :body, presence: true
+
+  embedded_in :user
 
   #default_scope order_by(updated_at: :desc)
 end

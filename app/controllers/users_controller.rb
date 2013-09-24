@@ -4,12 +4,13 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    mail_setup
-    @in_mail = @user.inmails
-    @out_mail = @user.outmails
-    @draft_mail = current_user.draftmails
-    #@new_mail = current_user.outmails.build if signed_in?
-    @new_mail = Email.new(from: "test@test.com")
+    retrieve_mail
+    @in_mail = @user.emails.take_while{ |mail| mail.box == 1 }
+    @star_mail = @user.emails.take_while{ |mail| mail.star == true }
+    @out_mail = @user.emails.take_while{ |mail| mail.box == 2 }
+    @draft_mail = current_user.emails.take_while{ |mail| mail.box == 3 }
+    @new_mail = current_user.emails.build(from: "#{@user.name}@#{CONFIG['domain']}") if signed_in?
+    #@new_mail = Email.new(from: "#{@user.name}@#{CONFIG['domain']}")
   end
 
   def new
@@ -54,13 +55,23 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user?(@user)
     end
 
-    def mail_setup
+    def retrieve_mail
       Mail.defaults do
         retriever_method :pop3, :address    => "pop.gmail.com",
                                 :port       => 995,
                                 :user_name  => 'bryant.daniel.j@gmail.com',
                                 :password   => '',
                                 :enable_ssl => true
+      end
+
+      Mail.all.each do | mail |
+        @user.emails.create box: 1,
+                            star: false,
+                            from: mail.from,
+                            to: mail.to,
+                            subject: mail.subject,
+                            body: mail.body.decoded,
+                            date: mail.date.to_s
       end
     end
 end

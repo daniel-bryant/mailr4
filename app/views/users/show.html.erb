@@ -34,8 +34,8 @@
 
   <div class="tabbable tabs-left">
     <ul class="nav nav-tabs sidebar">
-      <li class="active"><a href="#inbox" data-toggle="tab">Inbox</a></li>
-      <li><a href="#starred" data-toggle="tab">Starred<%= count_in_paren(@in_mail.count) %></a></li>
+      <li class="active"><a href="#inbox" data-toggle="tab">Inbox<%= count_in_paren(@in_mail.count) %></a></li>
+      <li><a href="#starred" data-toggle="tab">Starred<%= count_in_paren(@star_mail.count) %></a></li>
       <li><a href="#sent" data-toggle="tab">Sent<%= count_in_paren(@out_mail.count) %></a></li>
       <li><a href="#drafts" data-toggle="tab">Drafts<%= count_in_paren(@draft_mail.count) %></a></li>
     </ul> 
@@ -45,7 +45,7 @@
         <div class="accordion" id="accordion1">
           <% if @in_mail.any? %>
             <ul class="message-list">
-              <%= render @in_mail %>
+              <%= render partial: "emails/inmail", collection: @in_mail %>
             </ul>
           <% else %>
             <div class="center">Nothing here</div>
@@ -55,9 +55,9 @@
 
       <div id="starred" class="tab-pane">
         <div class="accordion" id="accordion2">
-          <% if  %>
+          <% if @star_mail.any? %>
             <ul class="message-list">
-              
+              <%= render partial: "emails/inmail", collection: @star_mail %>
             </ul>
           <% else %>
             <div class="center">Nothing here</div>
@@ -69,7 +69,7 @@
         <div class="accordion" id="accordion3">
           <% if @out_mail.any? %>
             <ul class="message-list">
-              <%= render @out_mail %>
+              <%= render partial: "emails/outmail", collection: @out_mail %>
             </ul>
           <% else %>
             <div class="center">Nothing here</div>
@@ -81,7 +81,7 @@
         <div class="accordion" id="accordion4">
           <% if @draft_mail.any? %>
             <ul class="message-list">
-              <%= render @draft_mail %>
+              <%= render partial: "emails/outmail", collection: @draft_mail %>
             </ul>
           <% else %>
             <div class="center">Nothing here</div>
