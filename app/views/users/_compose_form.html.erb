@@ -1,7 +1,7 @@
 <%= form_for(@new_mail) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.text_field :from, placeholder: "#{current_user.name}@#{CONFIG['domain']}" %>
+  <%= f.hidden_field :from, value: "#{current_user.name}@#{CONFIG['domain']}" %>
 
   <%= f.text_field :to, placeholder: "To" %>
 
@@ -11,6 +11,6 @@
     <%= f.text_area :body, placeholder: "Compose new email...", rows: 10 %>
   </div>
 
-  <%= link_to "send", '#', class: "btn btn-success" %>
-  <%= f.submit "save", class: "btn" %>
+  <%= f.submit 'send', class: "btn btn-success" %>
+  <%= f.submit 'save', class: "btn" %>
 <% end %>

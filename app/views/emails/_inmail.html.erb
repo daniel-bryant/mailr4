@@ -1,12 +1,15 @@
 <li class="mail-li">
-  <div class="address">
-    <%= inmail.from %>
-  </div>
-
-  <div class="subject">
-    <%= inmail.subject %>
-    <div class="date">
-      <%= inmail.date %>
+  <a data-toggle="modal" href="#readModal">
+    <div class="address">
+      <%= inmail.from %>
     </div>
-  </div>
+    <div class="subject">
+      <%= inmail.subject %>
+      <div class="date">
+        <%= inmail.date %>
+      </div>
+    </div>
+  </a>
 </li>
+
+

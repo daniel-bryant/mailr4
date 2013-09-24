@@ -4,11 +4,15 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    retrieve_mail
+    #retrieve_mail
+
+    #sets of emails
     @in_mail = @user.emails.take_while{ |mail| mail.box == 1 }
     @star_mail = @user.emails.take_while{ |mail| mail.star == true }
     @out_mail = @user.emails.take_while{ |mail| mail.box == 2 }
     @draft_mail = current_user.emails.take_while{ |mail| mail.box == 3 }
+    
+    #single email
     @new_mail = current_user.emails.build(from: "#{@user.name}@#{CONFIG['domain']}") if signed_in?
     #@new_mail = Email.new(from: "#{@user.name}@#{CONFIG['domain']}")
   end
