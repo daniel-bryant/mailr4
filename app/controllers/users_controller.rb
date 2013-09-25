@@ -4,16 +4,20 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    #retrieve_mail
+    retrieve_mail
 
     #sets of emails
-    @in_mail = @user.emails.take_while{ |mail| mail.box == 1 }
-    @star_mail = @user.emails.take_while{ |mail| mail.star == true }
-    @out_mail = @user.emails.take_while{ |mail| mail.box == 2 }
-    @draft_mail = current_user.emails.take_while{ |mail| mail.box == 3 }
-    
+    @in_mail = Array.new
+    current_user.emails.each { |m| @in_mail.push(m) if m.box == 1 }
+    @star_mail = Array.new
+    @user.emails.each { |m| @star_mail.push(m) if m.star == true }
+    @out_mail = Array.new
+    @user.emails.each { |m| @out_mail.push(m) if m.box == 2 }
+    @draft_mail = Array.new
+    current_user.emails.each { |m| @draft_mail.push(m) if m.box == 3 }
+
     #single email
-    @new_mail = current_user.emails.build(from: "#{@user.name}@#{CONFIG['domain']}") if signed_in?
+    @new_mail = current_user.emails.build if signed_in?
     #@new_mail = Email.new(from: "#{@user.name}@#{CONFIG['domain']}")
   end
 
@@ -64,18 +68,20 @@ class UsersController < ApplicationController
         retriever_method :pop3, :address    => "pop.gmail.com",
                                 :port       => 995,
                                 :user_name  => 'bryant.daniel.j@gmail.com',
-                                :password   => '',
+                                :password   => 'fibonacci',
                                 :enable_ssl => true
       end
 
       Mail.all.each do | mail |
-        @user.emails.create box: 1,
-                            star: false,
-                            from: mail.from,
-                            to: mail.to,
-                            subject: mail.subject,
-                            body: mail.body.decoded,
-                            date: mail.date.to_s
+        @message = Email.new box: 1,
+                             star: false,
+                             from: mail.from,
+                             to: mail.to,
+                             subject: mail.subject,
+                             body: mail.body.decoded,
+                             date: mail.date.to_s
+        current_user.emails.push(@message)
+        current_user.save
       end
     end
 end

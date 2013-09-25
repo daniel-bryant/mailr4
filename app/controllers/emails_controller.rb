@@ -3,20 +3,33 @@ class EmailsController < ApplicationController
 
   def create
     @new_email = current_user.emails.build(email_params)
-    
+    @err = true
+
     if params[:commit] == 'send'
       @new_email.box = 2
       ship_mail(@new_email)
-      flash[:success] = "Mail Sent"
+      if @new_email.save
+        flash[:success] = "Mail Sent"
+        redirect_to :back
+        @err = false
+      end
     elsif params[:commit] == 'save'
       @new_email.box = 3
-      flash[:success] = "Saved to Drafts"
+      if @new_email.save
+        flash[:success] = "Saved to Drafts"
+        redirect_to :back
+        @err = false
+      end
+    else
+      if @new_email.save
+        flash[:success] = "New Mail"
+        redirect_to :back
+        @err = false
+      end
     end
 
-    if @new_email.save
-      redirect_to :back
-    else
-      flash[:error] = "Draft not saved"
+    if @err
+      flash[:error] = "Error Saving or Retrieving"
       redirect_to :back
     end
   end
@@ -27,7 +40,7 @@ class EmailsController < ApplicationController
   private
 
     def email_params
-      params.require(:email).permit(:from, :to, :subject, :body)
+      params.require(:email).permit(:box, :star, :from, :to, :subject, :body, :date)
     end
 
     def ship_mail(outgoing)
