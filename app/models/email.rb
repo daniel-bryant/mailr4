@@ -14,7 +14,6 @@ class Email
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :from, presence: true, format: { with: VALID_EMAIL_REGEX }
   validates :to,   presence: true, format: { with: VALID_EMAIL_REGEX }
-  validates :body, presence: true
 
   embedded_in :user
 

@@ -2,15 +2,25 @@
 <div id="mail-wrap">
   <div id="button-row">
     <div class="sidebar">
-      <a href="#" id="show-compose" class="btn btn-primary">Compose</a>
-      <script>
-        $(function() {
-          $('a#show-compose').click(function(event){
-            event.preventDefault();
-            $('div#compose-box').toggle();
-          });
+      <a class="compose-link btn btn-primary" data-toggle="modal" href="#readModal">Compose</a>
+
+    <%= javascript_tag do %>
+      $(function() {
+        $('a.compose-link').click(function(event){
+          event.preventDefault();
+
+          $('h4#read-form-new').text('New Message');
+          $('h4#read-form-from').empty();
+          $('h4#read-form-to').empty();
+          $('h4#read-form-subject').empty();
+          $('div#read-form-body').empty();
+
+          $('input#email_to').val("");
+          $('input#email_subject').val("");
         });
-      </script>
+      });
+    <% end %>
+
     </div>
 
     <div class="content">
@@ -44,7 +54,7 @@
       <div id="inbox" class="tab-pane active">
         <% if @in_mail.any? %>
           <ul class="message-list">
-            <%= render partial: "emails/inmail", collection: @in_mail %>
+            <%= render partial: "emails/readmail", collection: @in_mail %>
           </ul>
         <% else %>
           <div class="center">Nothing here</div>
@@ -54,7 +64,7 @@
       <div id="starred" class="tab-pane">
         <% if @star_mail.any? %>
           <ul class="message-list">
-            <%= render partial: "emails/inmail", collection: @star_mail %>
+            <%= render partial: "emails/readmail", collection: @star_mail %>
           </ul>
         <% else %>
           <div class="center">Nothing here</div>
@@ -64,7 +74,7 @@
       <div id="sent" class="tab-pane">
         <% if @out_mail.any? %>
           <ul class="message-list">
-            <%= render partial: "emails/outmail", collection: @out_mail %>
+            <%= render partial: "emails/readmail", collection: @out_mail %>
           </ul>
         <% else %>
           <div class="center">Nothing here</div>
@@ -74,7 +84,7 @@
       <div id="drafts" class="tab-pane">
         <% if @draft_mail.any? %>
           <ul class="message-list">
-            <%= render partial: "emails/outmail", collection: @draft_mail %>
+            <%= render partial: "emails/readmail", collection: @draft_mail %>
           </ul>
         <% else %>
           <div class="center">Nothing here</div>
@@ -85,17 +95,27 @@
 
   <div class="bottom-clear"></div>
 
-  <div id="compose-box" class="hidden">
-    <div id="compose-top">
-      New Message
-      <div class="right">
-        <a href="#" class="btn btn-mini"><i class="icon-remove"></i></a>
-      </div>
-    </div>
-    <%= render 'users/compose_form' %>
-  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="readModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 id="read-form-new" class="modal-title"></h4>
+          <h4 id="read-form-from" class="modal-title"></h4>
+          <h4 id="read-form-to" class="modal-title"></h4>
+          <h4 id="read-form-subject" class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <div id="read-form-body" style="margin-bottom: 15px;"></div>
+          <%= render 'users/compose_form' %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 
-  <%= render 'users/read_form' %>
-
-</div>
+</div><!-- /#mail-wrap -->
 

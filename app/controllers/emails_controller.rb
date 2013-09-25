@@ -7,7 +7,7 @@ class EmailsController < ApplicationController
 
     if params[:commit] == 'send'
       @new_email.box = 2
-      ship_mail(@new_email)
+      #ship_mail(@new_email)
       if @new_email.save
         flash[:success] = "Mail Sent"
         redirect_to :back
@@ -35,6 +35,8 @@ class EmailsController < ApplicationController
   end
 
   def destroy
+    @email.destroy
+    redirect_to :back
   end
 
   private

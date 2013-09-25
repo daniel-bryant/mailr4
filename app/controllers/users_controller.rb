@@ -72,16 +72,17 @@ class UsersController < ApplicationController
                                 :enable_ssl => true
       end
 
-      Mail.all.each do | mail |
-        @message = Email.new box: 1,
-                             star: false,
-                             from: mail.from,
-                             to: mail.to,
-                             subject: mail.subject,
-                             body: mail.body.decoded,
-                             date: mail.date.to_s
-        current_user.emails.push(@message)
-        current_user.save
-      end
+      #Mail.all.each do | mail |
+      #  @some_mail = current_user.emails.build box: 1,
+      #                                         star: false,
+      #                                         from: mail.from,
+      #                                         to: mail.to,
+      #                                         subject: mail.subject,
+      #                                         body: mail.body.decoded,
+      #                                         date: mail.date.to_s
+      #  @some_mail.save
+      #end
+      #@some_mail = current_user.emails.build box: 1, from: "dan@test.com", to: "dan@test.com"
+      #@some_mail.save      
     end
 end

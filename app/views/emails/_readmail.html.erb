@@ -1,0 +1,39 @@
+<li class="mail-li">
+  <a class="read-link" data-toggle="modal" href="#readModal">
+    <div class="address">
+      <% if readmail.box==1 %>
+        <%= readmail.from %>
+      <% else %>
+        <%= readmail.to %>
+      <% end %>
+    </div>
+    <div class="subject">
+      <%= readmail.subject %>
+      <div class="date">
+        <%= readmail.date %>
+      </div>
+    </div>
+  </a>
+</li>
+
+<%= javascript_tag do %>
+  var from = '<%= j readmail.from %>';
+  var to = '<%= j readmail.to %>';
+  var subject = '<%= j readmail.subject %>';
+  var body = '<%= j readmail.body %>';
+
+  $(function() {
+    $('a.read-link').click(function(event){
+      event.preventDefault();
+
+      $('h4#read-form-new').empty();
+      $('h4#read-form-from').text('From: ' + from);
+      $('h4#read-form-to').text('To: ' + to);
+      $('h4#read-form-subject').text('Subject: ' + subject);
+      $('div#read-form-body').text(body);
+
+      $('input#email_to').val(from);
+      $('input#email_subject').val('RE: ' + subject);
+    });
+  });
+<% end %>

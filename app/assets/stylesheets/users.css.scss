@@ -42,6 +42,10 @@ ul {
   margin-bottom: 15px;
 }
 
+a.read-link div, a.read-link div div {
+  overflow: hidden;
+}
+
 .address {
   display: inline-block;
   width: 20%;
