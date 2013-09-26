@@ -84,7 +84,7 @@
       <div id="drafts" class="tab-pane">
         <% if @draft_mail.any? %>
           <ul class="message-list">
-            <%= render partial: "emails/readmail", collection: @draft_mail %>
+            <%= render partial: "emails/readdraft", collection: @draft_mail %>
           </ul>
         <% else %>
           <div class="center">Nothing here</div>

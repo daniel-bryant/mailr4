@@ -1,0 +1,14 @@
+<li class="mail-li">
+  <%= link_to (edit_email_path(readdraft)) do %>
+    <div class="address">
+      <%= readdraft.to %>
+    </div>
+    <div class="subject">
+      <%= readdraft.subject %>
+      <div class="date">
+        <%= readdraft.date %>
+      </div>
+    </div>
+  <% end %>
+</li>
+

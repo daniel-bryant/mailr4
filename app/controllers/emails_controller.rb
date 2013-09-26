@@ -1,27 +1,28 @@
 class EmailsController < ApplicationController
-  before_action :signed_in_user
+  before_action :signed_in_email, only: [:edit, :update]
+  before_action :correct_email,  only: [:edit, :update]
 
   def create
-    @new_email = current_user.emails.build(email_params)
+    @email = current_user.emails.build(email_params)
     @err = true
 
     if params[:commit] == 'send'
-      @new_email.box = 2
-      #ship_mail(@new_email)
-      if @new_email.save
+      @email.box = 2
+      #ship_mail(@email)
+      if @email.save
         flash[:success] = "Mail Sent"
         redirect_to :back
         @err = false
       end
     elsif params[:commit] == 'save'
-      @new_email.box = 3
-      if @new_email.save
+      @email.box = 3
+      if @email.save
         flash[:success] = "Saved to Drafts"
         redirect_to :back
         @err = false
       end
     else
-      if @new_email.save
+      if @email.save
         flash[:success] = "New Mail"
         redirect_to :back
         @err = false
@@ -29,14 +30,45 @@ class EmailsController < ApplicationController
     end
 
     if @err
-      flash[:error] = "Error Saving or Retrieving"
+      flash[:error] = "Error"
       redirect_to :back
+    end
+  end
+
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @err = true
+
+    if params[:commit] == 'send'
+      @email.box = 2
+      #ship_mail(@email)
+      if @email.update_attributes(email_params)
+        flash[:success] = "Mail Sent"
+        redirect_to current_user
+        @err = false
+      end
+    elsif params[:commit] == 'save'
+      @email.box = 3
+      if @email.update_attributes(email_params)
+        flash[:success] = "Draft Updated"
+        redirect_to current_user
+        @err = false
+      end
+    else
+      
+    end
+
+    if @err
+      render 'edit'
     end
   end
 
   def destroy
     @email.destroy
-    redirect_to :back
+    redirect_to current_user
   end
 
   private
@@ -52,6 +84,16 @@ class EmailsController < ApplicationController
         subject outgoing.subject
         body    outgoing.body
       end
+    end
+
+    # Before filters
+
+    def signed_in_email
+      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+    end
+
+    def correct_email
+      redirect_to(root_url) unless @email = current_user.emails.find(params[:id])
     end
 
 end
