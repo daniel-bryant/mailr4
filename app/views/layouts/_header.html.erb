@@ -1,8 +1,6 @@
 <header id="global-header" class="navbar navbar-fixed-top navbar-inverse">
   <div id="header-inner" class="navbar-inner">
-    <div id="logo">
-      MAILr4
-    </div>
+    <%= link_to "MAILr4", "https://github.com/daniel-bryant/mailr4", target: "_blank", id: "logo" %>
     <nav>
       <ul class="right">
         <li><%= header_btn(yield(:title)) %></li>

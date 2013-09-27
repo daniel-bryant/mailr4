@@ -1,6 +1,6 @@
 <div id="fat-menu" class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    <%= @user.name %>@<%= CONFIG['domain'] %><b class="caret"></b>
+    <%= current_user.name %>@<%= CONFIG['domain'] %><b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
     <li><%= link_to "Edit", edit_user_path(current_user) %></li>

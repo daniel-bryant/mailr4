@@ -1,5 +1,5 @@
 <li class="mail-li">
-  <a class="read-link" data-toggle="modal" href="#readModal">
+  <a id="read-<%= readmail.id %>" data-toggle="modal" href="#readModal">
     <div class="address">
       <% if readmail.box==1 %>
         <%= readmail.from %>
@@ -17,23 +17,28 @@
 </li>
 
 <%= javascript_tag do %>
-  var from = '<%= j readmail.from %>';
-  var to = '<%= j readmail.to %>';
-  var subject = '<%= j readmail.subject %>';
-  var body = '<%= j readmail.body %>';
-
   $(function() {
-    $('a.read-link').click(function(event){
+    $('a#read-<%= readmail.id %>').click(function(event){
       event.preventDefault();
 
       $('h4#read-form-new').empty();
-      $('h4#read-form-from').text('From: ' + from);
-      $('h4#read-form-to').text('To: ' + to);
-      $('h4#read-form-subject').text('Subject: ' + subject);
-      $('div#read-form-body').text(body);
+      $('h4#read-form-subject').text('Subject: <%= j readmail.subject %>');
+      $('div#read-form-body').text('some text');
 
-      $('input#email_to').val(from);
-      $('input#email_subject').val('RE: ' + subject);
+      if (<%= j readmail.box.to_s %> == 1) {
+        $('h4#read-form-from').text('From: <%= j readmail.from %>');
+        $('h4#read-form-to').text('To: me');
+
+        $('input#email_to').val('<%= j readmail.from %>');
+        $('input#email_subject').val('RE: <%= j readmail.subject %>');
+      } else {
+        $('h4#read-form-from').text('From: me');
+        $('h4#read-form-to').text('To: <%= j readmail.to %>');
+
+        $('input#email_to').val('<%= j readmail.to %>');
+        $('input#email_subject').val('<%= j readmail.subject %>');
+      }
+
     });
   });
 <% end %>

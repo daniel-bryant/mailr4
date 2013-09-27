@@ -7,36 +7,35 @@ class EmailsController < ApplicationController
     @err = true
 
     if params[:commit] == 'send'
-      @email.box = 2
+      @email.box = 3
       #ship_mail(@email)
       if @email.save
+        @email.update_attributes(box: 2)
         flash[:success] = "Mail Sent"
-        redirect_to :back
+        redirect_to current_user
         @err = false
       end
     elsif params[:commit] == 'save'
       @email.box = 3
       if @email.save
         flash[:success] = "Saved to Drafts"
-        redirect_to :back
+        redirect_to current_user
         @err = false
       end
     else
       if @email.save
         flash[:success] = "New Mail"
-        redirect_to :back
+        redirect_to current_user
         @err = false
       end
     end
 
     if @err
-      flash[:error] = "Error"
-      redirect_to :back
+      render 'edit'
     end
   end
 
   def edit
-    @user = current_user
   end
 
   def update
