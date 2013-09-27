@@ -1,4 +1,4 @@
-This is my predecessor to the Ruby on Rails, open source mail app, "mailr."
+This is my successor to the Ruby on Rails, open source mail app, "mailr."
 
 https://github.com/lmanolov/mailr
 
