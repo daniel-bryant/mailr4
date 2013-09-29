@@ -1,5 +1,5 @@
 <li class="mail-li">
-  <a id="read-<%= readmail.id %>" data-toggle="modal" href="#readModal">
+  <a id="read-<%= readmail.id %>" class="read-link" data-toggle="tab" href="#readpane">
     <div class="address">
       <% if readmail.box==1 %>
         <%= readmail.from %>
@@ -21,22 +21,20 @@
     $('a#read-<%= readmail.id %>').click(function(event){
       event.preventDefault();
 
-      $('h4#read-form-new').empty();
       $('h4#read-form-subject').text('Subject: <%= j readmail.subject %>');
-      $('div#read-form-body').text('some text');
+      $('div#read-form-body').text('<%= j readmail.body %>');
+      $('input#email_reply_subject').val('<%= j readmail.subject %>');
 
       if (<%= j readmail.box.to_s %> == 1) {
         $('h4#read-form-from').text('From: <%= j readmail.from %>');
         $('h4#read-form-to').text('To: me');
 
-        $('input#email_to').val('<%= j readmail.from %>');
-        $('input#email_subject').val('RE: <%= j readmail.subject %>');
+        $('input#email_reply_to').val('<%= j readmail.from %>');
       } else {
         $('h4#read-form-from').text('From: me');
         $('h4#read-form-to').text('To: <%= j readmail.to %>');
 
-        $('input#email_to').val('<%= j readmail.to %>');
-        $('input#email_subject').val('<%= j readmail.subject %>');
+        $('input#email_reply_to').val('<%= j readmail.to %>');
       }
 
     });

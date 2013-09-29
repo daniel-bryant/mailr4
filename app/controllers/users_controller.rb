@@ -15,9 +15,12 @@ class UsersController < ApplicationController
     @user.emails.each { |m| @out_mail.push(m) if m.box == 2 }
     @draft_mail = Array.new
     current_user.emails.each { |m| @draft_mail.push(m) if m.box == 3 }
+    @trash_mail = Array.new
+    #todo init trash array
 
     #single email
     @new_mail = current_user.emails.build if signed_in?
+    @reply_mail = current_user.emails.build if signed_in?
     #@new_mail = Email.new(from: "#{@user.name}@#{CONFIG['domain']}")
   end
 

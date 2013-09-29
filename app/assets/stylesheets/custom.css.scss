@@ -40,6 +40,10 @@ textarea {
   margin: 0 50px;
 }
 
+.centerpiece {
+  margin: 0 auto;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -156,5 +160,18 @@ input {
 .field_with_errors {
   @extend .control-group;
   @extend .error;
+}
+
+#inbox, #starred, #sent, #drafts {
+  border-top: 1px solid #777;
+}
+
+.mail-li {
+  border-bottom: 1px solid #777;
+}
+
+.mail-li div, .mail-li div div {
+  overflow-x: hidden;
+  vertical-align: top;
 }
 

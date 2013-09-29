@@ -1,14 +1,14 @@
-<%= form_for(@new_mail, index: "new") do |f| %>
+<%= form_for(@reply_mail, index: "reply") do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
   <%= f.hidden_field :from, value: "#{current_user.name}@#{CONFIG['domain']}" %>
 
-  <%= f.text_field :to, placeholder: "To" %>
+  <%= f.hidden_field :to %>
 
-  <%= f.text_field :subject, placeholder: "Subject" %>
+  <%= f.hidden_field :subject %>
 
   <div class="field">
-    <%= f.text_area :body, placeholder: "Compose email...", rows: 10 %>
+    <%= f.text_area :body, placeholder: "Quickreply", rows: 5 %>
   </div>
 
   <%= f.submit 'send', class: "btn btn-success" %>

@@ -3,24 +3,6 @@
   <div id="button-row">
     <div class="sidebar">
       <a class="compose-link btn btn-primary" data-toggle="modal" href="#readModal">Compose</a>
-
-    <%= javascript_tag do %>
-      $(function() {
-        $('a.compose-link').click(function(event){
-          event.preventDefault();
-
-          $('h4#read-form-new').text('New Message');
-          $('h4#read-form-from').empty();
-          $('h4#read-form-to').empty();
-          $('h4#read-form-subject').empty();
-          $('div#read-form-body').empty();
-
-          $('input#email_to').val("");
-          $('input#email_subject').val("");
-        });
-      });
-    <% end %>
-
     </div>
 
     <div class="content">
@@ -48,7 +30,8 @@
       <li><a href="#starred" data-toggle="tab">Starred<%= count_in_paren(@star_mail.count) %></a></li>
       <li><a href="#sent" data-toggle="tab">Sent<%= count_in_paren(@out_mail.count) %></a></li>
       <li><a href="#drafts" data-toggle="tab">Drafts<%= count_in_paren(@draft_mail.count) %></a></li>
-    </ul> 
+      <li><a href="#trash" data-toggle="tab">Trash<%= count_in_paren(@trash_mail.count) %></a></li>
+    </ul>
 
     <div class="tab-content content">
       <div id="inbox" class="tab-pane active">
@@ -90,6 +73,25 @@
           <div class="center">Nothing here</div>
         <% end %>
       </div>
+
+      <div id="trash" class="tab-pane">
+        <% if @trash_mail.any? %>
+          <ul class="message-list">
+        <%= render partial: "emails/readmail", collection: @trash_mail %>
+          </ul>
+        <% else %>
+          <div class="center">Nothing here</div>
+        <% end %>
+      </div>
+
+      <div id="readpane" class="tab-pane">
+        <h4 id="read-form-from"></h4>
+        <h4 id="read-form-to"></h4>
+        <h4 id="read-form-subject"></h4>
+        <div id="read-form-body" style="margin-bottom: 20px"></div>
+        <%= render 'users/reply_form' %>
+      </div>
+
     </div> <!-- /.tab-content content -->
   </div> <!-- /.tabbable tabs-left -->
 
@@ -101,17 +103,25 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 id="read-form-new" class="modal-title"></h4>
-          <h4 id="read-form-from" class="modal-title"></h4>
-          <h4 id="read-form-to" class="modal-title"></h4>
-          <h4 id="read-form-subject" class="modal-title"></h4>
+          <h4 class="modal-title">New Message</h4>
         </div>
         <div class="modal-body">
-          <div id="read-form-body" style="margin-bottom: 15px;"></div>
           <%= render 'users/compose_form' %>
         </div>
         <div class="modal-footer">
+          <button id="clear-btn" type="button" class="btn btn-default" >Clear</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <%= javascript_tag do %>
+            $(function() {
+		          $('button#clear-btn').click(function(event){
+		            event.preventDefault();
+
+		            $('input#email_new_to').val("");
+		            $('input#email_new_subject').val("");
+		            $('textarea#email_new_body').val("");
+		          });
+            });
+	        <% end %>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
