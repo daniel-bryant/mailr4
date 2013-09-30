@@ -36,7 +36,7 @@
     <div class="tab-content content">
       <div id="inbox" class="tab-pane active">
         <% if @in_mails.any? %>
-          <ol class="message-list">
+          <ol class="emails">
             <%= render @in_mails %>
           </ol>
           <%= will_paginate @in_mails, param_name: :in_page %>
@@ -47,7 +47,7 @@
 
       <div id="starred" class="tab-pane">
         <% if @star_mails.any? %>
-          <ol class="message-list">
+          <ol class="emails">
             <%= render @star_mails %>
           </ol>
           <%= will_paginate @star_mails, param_name: :star_page %>
@@ -58,7 +58,7 @@
 
       <div id="sent" class="tab-pane">
         <% if @out_mails.any? %>
-          <ol class="message-list">
+          <ol class="emails">
             <%= render @out_mails %>
           </ol>
           <%= will_paginate @out_mails, param_name: :out_page %>
@@ -69,8 +69,8 @@
 
       <div id="drafts" class="tab-pane">
         <% if @draft_mails.any? %>
-          <ol class="message-list">
-            <%= render @draft_mails %>
+          <ol class="emails">
+            <%= render partial: 'emails/readdraft', collection: @draft_mails %>
           </ol>
           <%= will_paginate @draft_mails, param_name: :draft_page %>
         <% else %>
@@ -80,7 +80,7 @@
 
       <div id="trash" class="tab-pane">
         <% if @trash_mails.any? %>
-          <ol class="message-list">
+          <ol class="emails">
             <%= render @trash_mails, param_name: :trash_page %>
           </ol>
           <%= will_paginate @trash_mails %>
@@ -95,6 +95,17 @@
         <h4 id="read-form-subject"></h4>
         <div id="read-form-body" style="margin-bottom: 20px"></div>
         <%= render 'users/reply_form' %>
+        <%= javascript_tag do %>
+          $(function() {
+            $('a.read-link').click(function(event){
+              event.preventDefault();
+
+              $('ul.nav-tabs').children().removeClass("active");
+              $('div.tab-content').children().removeClass("active");
+              $('div#readpane').addClass("active");
+            });
+          });
+        <% end %>
       </div>
 
     </div> <!-- /.tab-content content -->

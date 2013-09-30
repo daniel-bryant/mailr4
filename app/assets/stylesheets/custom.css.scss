@@ -162,7 +162,7 @@ input {
   @extend .error;
 }
 
-#inbox, #starred, #sent, #drafts {
+#inbox, #starred, #sent, #drafts, #trash {
   border-top: 1px solid #777;
 }
 
@@ -175,3 +175,16 @@ input {
   vertical-align: top;
 }
 
+/* emails */
+
+.emails {
+  list-style: none;
+
+  div {
+    line-height: 2.2em;
+
+    div {
+      line-height: 2.2em;
+    }
+  }
+}
