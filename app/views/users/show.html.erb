@@ -26,59 +26,64 @@
 
   <div class="tabbable tabs-left">
     <ul class="nav nav-tabs sidebar">
-      <li class="active"><a href="#inbox" data-toggle="tab">Inbox<%= count_in_paren(@in_mail.count) %></a></li>
-      <li><a href="#starred" data-toggle="tab">Starred<%= count_in_paren(@star_mail.count) %></a></li>
-      <li><a href="#sent" data-toggle="tab">Sent<%= count_in_paren(@out_mail.count) %></a></li>
-      <li><a href="#drafts" data-toggle="tab">Drafts<%= count_in_paren(@draft_mail.count) %></a></li>
-      <li><a href="#trash" data-toggle="tab">Trash<%= count_in_paren(@trash_mail.count) %></a></li>
+      <li class="active"><a href="#inbox" data-toggle="tab">Inbox<%= count_in_paren(@in_mails.count) %></a></li>
+      <li><a href="#starred" data-toggle="tab">Starred<%= count_in_paren(@star_mails.count) %></a></li>
+      <li><a href="#sent" data-toggle="tab">Sent<%= count_in_paren(@out_mails.count) %></a></li>
+      <li><a href="#drafts" data-toggle="tab">Drafts<%= count_in_paren(@draft_mails.count) %></a></li>
+      <li><a href="#trash" data-toggle="tab">Trash<%= count_in_paren(@trash_mails.count) %></a></li>
     </ul>
 
     <div class="tab-content content">
       <div id="inbox" class="tab-pane active">
-        <% if @in_mail.any? %>
-          <ul class="message-list">
-            <%= render partial: "emails/readmail", collection: @in_mail %>
-          </ul>
+        <% if @in_mails.any? %>
+          <ol class="message-list">
+            <%= render @in_mails %>
+          </ol>
+          <%= will_paginate @in_mails, param_name: :in_page %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
       </div>
 
       <div id="starred" class="tab-pane">
-        <% if @star_mail.any? %>
-          <ul class="message-list">
-            <%= render partial: "emails/readmail", collection: @star_mail %>
-          </ul>
+        <% if @star_mails.any? %>
+          <ol class="message-list">
+            <%= render @star_mails %>
+          </ol>
+          <%= will_paginate @star_mails, param_name: :star_page %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
       </div>
 
       <div id="sent" class="tab-pane">
-        <% if @out_mail.any? %>
-          <ul class="message-list">
-            <%= render partial: "emails/readmail", collection: @out_mail %>
-          </ul>
+        <% if @out_mails.any? %>
+          <ol class="message-list">
+            <%= render @out_mails %>
+          </ol>
+          <%= will_paginate @out_mails, param_name: :out_page %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
       </div>
 
       <div id="drafts" class="tab-pane">
-        <% if @draft_mail.any? %>
-          <ul class="message-list">
-            <%= render partial: "emails/readdraft", collection: @draft_mail %>
-          </ul>
+        <% if @draft_mails.any? %>
+          <ol class="message-list">
+            <%= render @draft_mails %>
+          </ol>
+          <%= will_paginate @draft_mails, param_name: :draft_page %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
       </div>
 
       <div id="trash" class="tab-pane">
-        <% if @trash_mail.any? %>
-          <ul class="message-list">
-        <%= render partial: "emails/readmail", collection: @trash_mail %>
-          </ul>
+        <% if @trash_mails.any? %>
+          <ol class="message-list">
+            <%= render @trash_mails, param_name: :trash_page %>
+          </ol>
+          <%= will_paginate @trash_mails %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>

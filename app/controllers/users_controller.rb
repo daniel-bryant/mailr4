@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [:edit, :update]
   before_action :correct_user,   only: [:edit, :update]
@@ -7,21 +9,29 @@ class UsersController < ApplicationController
     retrieve_mail
 
     #sets of emails
-    @in_mail = Array.new
-    current_user.emails.each { |m| @in_mail.push(m) if m.box == 1 }
-    @star_mail = Array.new
-    @user.emails.each { |m| @star_mail.push(m) if m.star == true }
-    @out_mail = Array.new
-    @user.emails.each { |m| @out_mail.push(m) if m.box == 2 }
-    @draft_mail = Array.new
-    current_user.emails.each { |m| @draft_mail.push(m) if m.box == 3 }
-    @trash_mail = Array.new
-    #todo init trash array
+    @in_arr = Array.new
+    @star_arr = Array.new
+    @out_arr = Array.new
+    @draft_arr = Array.new
+    @trash_arr = Array.new
+
+    @user.emails.each do |m|
+      @in_arr.push(m) if m.box == 1
+      @star_arr.push(m) if m.star == true
+      @out_arr.push(m) if m.box == 2
+      @draft_arr.push(m) if m.box == 3    
+      @trash_arr.push(m) if m.box == 4
+    end
+
+    @in_mails = @in_arr.paginate(page: params[:in_page])
+    @star_mails = @star_arr.paginate(page: params[:star_page])
+    @out_mails = @out_arr.paginate(page: params[:out_page])
+    @draft_mails = @draft_arr.paginate(page: params[:draft_page])
+    @trash_mails = @trash_arr.paginate(page: params[:trash_page])
 
     #single email
-    @new_mail = current_user.emails.build if signed_in?
-    @reply_mail = current_user.emails.build if signed_in?
-    #@new_mail = Email.new(from: "#{@user.name}@#{CONFIG['domain']}")
+    @new_mail = @user.emails.build if signed_in?
+    @reply_mail = @user.emails.build if signed_in?
   end
 
   def new

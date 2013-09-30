@@ -1,0 +1,38 @@
+<li class="mail-li">
+  <a id="read-<%= email.id %>" class="read-link" data-toggle="tab" href="#readpane">
+    <div class="address">
+      <% if email.box==1 %>
+        <%= email.from %>
+      <% else %>
+        <%= email.to %>
+      <% end %>
+    </div>
+    <div class="subject">
+      <%= email.subject %>
+      <div class="date">
+        <%= email.date %>
+      </div>
+    </div>
+  </a>
+</li>
+
+<%= javascript_tag do %>
+  $(function() {
+    $('a#read-<%= email.id %>').click(function(event){
+      event.preventDefault();
+
+      $('h4#read-form-from').text('From: <%= j email.from %>');
+      $('h4#read-form-to').text('To: <%= j email.to %>');
+      $('h4#read-form-subject').text('Subject: <%= j email.subject %>');
+      $('div#read-form-body').text('<%= j email.body %>');
+      $('input#email_reply_subject').val('<%= j email.subject %>');
+
+      if (<%= j email.box.to_s %> == 1) {
+        $('input#email_reply_to').val('<%= j email.from %>');
+      } else {
+        $('input#email_reply_to').val('<%= j email.to %>');
+      }
+
+    });
+  });
+<% end %>

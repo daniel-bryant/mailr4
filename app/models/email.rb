@@ -1,7 +1,7 @@
 class Email
   include Mongoid::Document
   include Mongoid::Timestamps
-  field :box,     type: Integer #inbox-1, sent-2, drafts-3
+  field :box,     type: Integer #inbox-1, sent-2, drafts-3, trash-4
   field :star,    type: Boolean
   field :from,    type: String
   field :to,      type: String
