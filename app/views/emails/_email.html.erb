@@ -1,4 +1,4 @@
-<li class="mail-li">
+<li class="mail-li <%= 'new-email' if email.is_new %>">
   <a id="read-<%= email.id %>" class="read-link" data-toggle="tab" href="#readpane">
     <div class="address">
       <% if email.box==1 %>
@@ -10,7 +10,7 @@
     <div class="subject">
       <%= email.subject %>
       <div class="date">
-        <%= email.date %>
+        <%= time_ago_in_words(email.updated_at) %>
       </div>
     </div>
   </a>
@@ -32,7 +32,6 @@
       } else {
         $('input#email_reply_to').val('<%= j email.to %>');
       }
-
     });
   });
 <% end %>

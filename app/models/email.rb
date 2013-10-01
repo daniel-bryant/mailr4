@@ -8,7 +8,7 @@ class Email
   field :subject, type: String
   field :body,    type: String
   field :date,    type: String
-  field :is_new,     type: Boolean
+  field :is_new,  type: Boolean
 
   # Validations
   validates :box,  presence: true
