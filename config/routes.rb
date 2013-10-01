@@ -1,7 +1,9 @@
 Mailr4::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :emails,   only: [:create, :edit, :update, :destroy]
+  resources :emails,   only: [:create, :edit, :update, :destroy] do
+    put 'read', on: :member
+  end
   root 'sessions#new'
   match '/signup',  to: 'users#new',        via: 'get'
   match '/signin',  to: 'sessions#new',     via: 'get'

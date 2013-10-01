@@ -23,11 +23,7 @@ class EmailsController < ApplicationController
         @err = false
       end
     else
-      if @email.save
-        flash[:success] = "New Mail"
-        redirect_to current_user
-        @err = false
-      end
+      # do nothing
     end
 
     if @err
@@ -57,7 +53,7 @@ class EmailsController < ApplicationController
         @err = false
       end
     else
-      
+      #do nothing
     end
 
     if @err
@@ -70,10 +66,19 @@ class EmailsController < ApplicationController
     redirect_to current_user
   end
 
+  def read
+    @read_this = current_user.emails.find(params[:id])
+    if @read_this.update_attributes(is_new: nil)
+
+    else
+
+    end
+  end
+
   private
 
     def email_params
-      params.require(:email).permit(:box, :star, :from, :to, :subject, :body, :date)
+      params.require(:email).permit(:box, :star, :from, :to, :subject, :body, :date, :is_new)
     end
 
     def ship_mail(outgoing)

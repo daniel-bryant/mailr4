@@ -81,22 +81,22 @@ class UsersController < ApplicationController
         retriever_method :pop3, :address    => "pop.gmail.com",
                                 :port       => 995,
                                 :user_name  => 'bryant.daniel.j@gmail.com',
-                                :password   => 'fibonacci',
+                                :password   => '',
                                 :enable_ssl => true
       end
 
-      Mail.all.each do | mail |
-        @some_mail = current_user.emails.build box: 1,
-                                               star: false,
-                                               from: mail.from.first,
-                                               to: mail.to.first,
-                                               subject: mail.subject,
-                                               body: mail.body.decoded,
-                                               date: mail.date.to_s,
-                                               is_new: true
-        @some_mail.save
-      end
-      #@some_mail = current_user.emails.build box: 1, from: "dan@test.com", to: "dan@test.com", subject: "hello", body: "this is the body"
+      #Mail.all.each do | mail |
+      #  @some_mail = current_user.emails.build box: 1,
+      #                                         star: false,
+      #                                         from: mail.from.first,
+      #                                         to: mail.to.first,
+      #                                         subject: mail.subject,
+      #                                         body: mail.body.decoded,
+      #                                         date: mail.date.to_s,
+      #                                         is_new: true
+      #  @some_mail.save
+      #end
+      #@some_mail = @user.emails.build box: 1, from: "dan@test.com", to: "dan@test.com", subject: "hello", body: "this is the body", is_new: true
       #@some_mail.save
     end
 end

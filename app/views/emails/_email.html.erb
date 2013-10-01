@@ -1,5 +1,6 @@
-<li class="mail-li <%= 'new-email' if email.is_new %>">
-  <a id="read-<%= email.id %>" class="read-link" data-toggle="tab" href="#readpane">
+<li id="li-<%= email.id %>" class="mail-li <%= 'new-email' if email.is_new %>">
+  <%= link_to read_email_path(email), method: :put, remote: true, id: "read-#{email.id}", class: "read-link" do %>
+  <!-- data-toggle="tab" href="#readpane"-->
     <div class="address">
       <% if email.box==1 %>
         <%= email.from %>
@@ -13,7 +14,7 @@
         <%= time_ago_in_words(email.updated_at) %>
       </div>
     </div>
-  </a>
+  <% end %>
 </li>
 
 <%= javascript_tag do %>
@@ -32,6 +33,8 @@
       } else {
         $('input#email_reply_to').val('<%= j email.to %>');
       }
+
+      $('li#li-<%= email.id %>').removeClass('new-email');
     });
   });
 <% end %>
