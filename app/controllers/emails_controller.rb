@@ -68,11 +68,12 @@ class EmailsController < ApplicationController
 
   def read
     @read_this = current_user.emails.find(params[:id])
-    if @read_this.update_attributes(is_new: nil)
+    @read_this.update_attributes(is_new: nil)
+  end
 
-    else
-
-    end
+  def deletemany
+    current_user.emails.where(id: params[:emails]).destroy_all
+    redirect_to current_user
   end
 
   private

@@ -36,10 +36,13 @@
     <div class="tab-content content">
       <div id="inbox" class="tab-pane active">
         <% if @in_mails.any? %>
-          <ol class="emails">
-            <%= render @in_mails %>
-          </ol>
-          <%= will_paginate @in_mails, param_name: :in_page %>
+          <%= form_tag deletemany_emails_path, method: :delete do %>
+            <%= submit_tag "delete" %>
+            <ol class="emails">
+              <%= render @in_mails %>
+            </ol>
+            <%= will_paginate @in_mails, param_name: :in_page %>
+          <% end %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
