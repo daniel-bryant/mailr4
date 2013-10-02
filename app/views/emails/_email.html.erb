@@ -1,5 +1,8 @@
 <li id="li-<%= email.id %>" class="mail-li <%= 'new-email' if email.is_new %>">
-  <%= check_box_tag('emails[]', email.id) %>
+<div>
+<%= check_box_tag('emails[]', email.id) %>
+</div>
+<div>
   <%= link_to read_email_path(email), method: :put, remote: true, id: "read-#{email.id}", class: "read-link" do %>
   <!-- data-toggle="tab" href="#readpane"-->
     <div class="address">
@@ -16,6 +19,7 @@
       </div>
     </div>
   <% end %>
+</div>
 </li>
 
 <%= javascript_tag do %>

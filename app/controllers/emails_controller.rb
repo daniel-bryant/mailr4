@@ -67,12 +67,14 @@ class EmailsController < ApplicationController
   end
 
   def read
-    @read_this = current_user.emails.find(params[:id])
+    @read_this = current_user.emails.find(read_params)
     @read_this.update_attributes(is_new: nil)
   end
 
   def deletemany
-    current_user.emails.where(id: params[:emails]).destroy_all
+    #current_user.emails.destroy_all(conditions: {id: params[:emails]})
+    @these = current_user.emails.find(dm_params)
+    @these.each { |t| t.destroy }
     redirect_to current_user
   end
 
@@ -80,6 +82,14 @@ class EmailsController < ApplicationController
 
     def email_params
       params.require(:email).permit(:box, :star, :from, :to, :subject, :body, :date, :is_new)
+    end
+
+    def read_params
+      params.require(:id)
+    end
+
+    def dm_params
+      params.require(:emails)
     end
 
     def ship_mail(outgoing)
