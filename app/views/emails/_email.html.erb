@@ -1,45 +1,61 @@
 <li id="li-<%= email.id %>" class="mail-li <%= 'new-email' if email.is_new %>">
-<div>
+<div class="checkbox">
 <%= check_box_tag('emails[]', email.id) %>
 </div>
 <div>
-  <%= link_to read_email_path(email), method: :put, remote: true, id: "read-#{email.id}", class: "read-link" do %>
-  <!-- data-toggle="tab" href="#readpane"-->
-    <div class="address">
-      <% if email.box==1 %>
-        <%= email.from %>
-      <% else %>
+  <% if email.box == 3 %>
+    <%= link_to (edit_email_path(email)) do %>
+      <div class="address">
         <%= email.to %>
-      <% end %>
-    </div>
-    <div class="subject">
-      <%= email.subject %>
-      <div class="date">
-        <%= time_ago_in_words(email.updated_at) %>
       </div>
-    </div>
+      <div class="subject">
+        <%= (email.subject.to_s.length == 0) ? '(no subject)' : email.subject %>
+        <div class="date">
+          <%= time_ago_in_words(email.updated_at) %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <%= link_to read_email_path(email), method: :put, remote: true, id: "read-#{email.id}", class: "read-link" do %>
+      <div class="address">
+        <% if email.box==1 %>
+          <%= email.from %>
+        <% else %>
+          <%= email.to %>
+        <% end %>
+      </div>
+      <div class="subject">
+        <%= (email.subject.to_s.length == 0) ? '(no subject)' : email.subject %>
+        <div class="date">
+          <%= time_ago_in_words(email.updated_at) %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 </div>
 </li>
 
-<%= javascript_tag do %>
-  $(function() {
-    $('a#read-<%= email.id %>').click(function(event){
-      event.preventDefault();
+<% if email.box != 3 %>
+  <%= javascript_tag do %>
+    $(function() {
+      $('a#read-<%= email.id %>').click(function(event){
+        event.preventDefault();
 
-      $('h4#read-form-from').text('From: <%= j email.from %>');
-      $('h4#read-form-to').text('To: <%= j email.to %>');
-      $('h4#read-form-subject').text('Subject: <%= j email.subject %>');
-      $('div#read-form-body').text('<%= j email.body %>');
-      $('input#email_reply_subject').val('<%= j email.subject %>');
+        $('h4#read-form-from').text('From: <%= j email.from %>');
+        $('h4#read-form-to').text('To: <%= j email.to %>');
+        $('h4#read-form-subject').text('Subject: <%= j email.subject %>');
+        $('div#read-form-body').text('<%= j email.body %>');
+        $('input#email_reply_subject').val('<%= j email.subject %>');
 
-      if (<%= j email.box.to_s %> == 1) {
-        $('input#email_reply_to').val('<%= j email.from %>');
-      } else {
+        if (<%= j email.box.to_s %> == 1) {
+          $('input#email_reply_to').val('<%= j email.from %>');
+        } else {
         $('input#email_reply_to').val('<%= j email.to %>');
-      }
+        }
 
-      $('li#li-<%= email.id %>').removeClass('new-email');
+        $('li#li-<%= email.id %>').removeClass('new-email');
+      });
     });
-  });
+  <% end %>
 <% end %>
+

@@ -44,6 +44,18 @@ textarea {
   margin: 0 auto;
 }
 
+a {
+  color: #222;
+}
+
+a.dropdown-toggle {
+  color: white;
+}
+
+.offset3 {
+  margin-left: 45%;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -167,7 +179,7 @@ input {
 }
 
 .mail-li {
-  border-bottom: 1px solid #777;
+  border-top: 1px solid #777;
 }
 
 .mail-li div, .mail-li div div {
@@ -192,5 +204,15 @@ input {
 .new-email {
   background-color: #dbdbdb;
   font-weight: bold;
+}
+
+.action-btns {
+  margin: 9px;
+}
+
+.checkbox {
+  float: left;
+  padding-right: 3px;
+  height: 2.2em;
 }
 

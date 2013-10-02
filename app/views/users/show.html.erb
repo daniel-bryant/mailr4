@@ -4,24 +4,6 @@
     <div class="sidebar">
       <a class="compose-link btn btn-primary" data-toggle="modal" href="#readModal">Compose</a>
     </div>
-
-    <div class="content">
-      <div class="left">
-        <a href="#" class="btn"><i class="icon-ok"></i></a>
-        <a href="#" class="btn"><i class="icon-refresh"></i></a>
-        <a href="#" class="btn"><i class="icon-trash"></i></a>
-      </div>
-
-      <div class="right">
-        0-0 of 0
-        <div class="btn-group">
-          <a href="#" class="btn"><i class="icon-chevron-left"></i></a>
-          <a href="#" class="btn"><i class="icon-chevron-right"></i></a>
-        </div>
-      </div>
-    </div>
-
-
   </div>
 
   <div class="tabbable tabs-left">
@@ -37,7 +19,15 @@
       <div id="inbox" class="tab-pane active">
         <% if @in_mails.any? %>
           <%= form_tag deletemany_emails_path, method: :delete do %>
-            <%= submit_tag "delete" %>
+            <%= hidden_field_tag 'mailbox', 'other' %>
+            <div class="action-btns">
+              <%= button_tag type: "button", id: "inbox-checkall", class: "btn" do %>
+                <i class="icon-ok"></i>
+              <% end %>
+              <%= button_tag type: "submit", class: "btn" do %>
+                <i class="icon-trash"></i>
+              <% end %>
+            </div>
             <ol class="emails">
               <%= render @in_mails %>
             </ol>
@@ -50,10 +40,21 @@
 
       <div id="starred" class="tab-pane">
         <% if @star_mails.any? %>
-          <ol class="emails">
-            <%= render @star_mails %>
-          </ol>
-          <%= will_paginate @star_mails, param_name: :star_page %>
+          <%= form_tag deletemany_emails_path, method: :delete do %>
+            <%= hidden_field_tag 'mailbox', 'other' %>
+            <div class="action-btns">
+              <%= button_tag type: "button", id: "starred-checkall", class: "btn" do %>
+                <i class="icon-ok"></i>
+              <% end %>
+              <%= button_tag type: "submit", class: "btn" do %>
+                <i class="icon-trash"></i>
+              <% end %>
+            </div>
+            <ol class="emails">
+              <%= render @star_mails %>
+            </ol>
+            <%= will_paginate @star_mails, param_name: :star_page %>
+          <% end %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
@@ -61,10 +62,21 @@
 
       <div id="sent" class="tab-pane">
         <% if @out_mails.any? %>
-          <ol class="emails">
-            <%= render @out_mails %>
-          </ol>
-          <%= will_paginate @out_mails, param_name: :out_page %>
+          <%= form_tag deletemany_emails_path, method: :delete do %>
+            <%= hidden_field_tag 'mailbox', 'other' %>
+            <div class="action-btns">
+              <%= button_tag type: "button", id: "sent-checkall", class: "btn" do %>
+                <i class="icon-ok"></i>
+              <% end %>
+              <%= button_tag type: "submit", class: "btn" do %>
+                <i class="icon-trash"></i>
+              <% end %>
+            </div>
+            <ol class="emails">
+              <%= render @out_mails %>
+            </ol>
+            <%= will_paginate @out_mails, param_name: :out_page %>
+          <% end %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
@@ -72,10 +84,21 @@
 
       <div id="drafts" class="tab-pane">
         <% if @draft_mails.any? %>
-          <ol class="emails">
-            <%= render partial: 'emails/readdraft', collection: @draft_mails %>
-          </ol>
-          <%= will_paginate @draft_mails, param_name: :draft_page %>
+          <%= form_tag deletemany_emails_path, method: :delete do %>
+            <%= hidden_field_tag 'mailbox', 'other' %>
+            <div class="action-btns">
+              <%= button_tag type: "button", id: "drafts-checkall", class: "btn" do %>
+                <i class="icon-ok"></i>
+              <% end %>
+              <%= button_tag type: "submit", class: "btn" do %>
+                <i class="icon-trash"></i>
+              <% end %>
+            </div>
+            <ol class="emails">
+              <%= render @draft_mails %>
+            </ol>
+            <%= will_paginate @draft_mails, param_name: :draft_page %>
+          <% end %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
@@ -83,10 +106,21 @@
 
       <div id="trash" class="tab-pane">
         <% if @trash_mails.any? %>
-          <ol class="emails">
-            <%= render @trash_mails, param_name: :trash_page %>
-          </ol>
-          <%= will_paginate @trash_mails %>
+          <%= form_tag deletemany_emails_path, method: :delete do %>
+            <%= hidden_field_tag 'mailbox', 'trash' %>
+            <div class="action-btns">
+              <%= button_tag type: "button", id: "trash-checkall", class: "btn" do %>
+                <i class="icon-ok"></i>
+              <% end %>
+              <%= button_tag type: "submit", data: {confirm: 'Delete Permanently?'}, class: "btn" do %>
+                <i class="icon-trash"></i>
+              <% end %>
+            </div>
+            <ol class="emails">
+              <%= render @trash_mails %>
+            </ol>
+            <%= will_paginate @trash_mails, param_name: :trash_page %>
+          <% end %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
@@ -98,18 +132,45 @@
         <h4 id="read-form-subject"></h4>
         <div id="read-form-body" style="margin-bottom: 20px"></div>
         <%= render 'users/reply_form' %>
-        <%= javascript_tag do %>
-          $(function() {
-            $('a.read-link').click(function(event){
-              event.preventDefault();
-
-              $('ul.nav-tabs').children().removeClass("active");
-              $('div.tab-content').children().removeClass("active");
-              $('div#readpane').addClass("active");
-            });
-          });
-        <% end %>
       </div>
+
+      <%= javascript_tag do %>
+        $(function() {
+          $('#inbox-checkall').click(function(event){
+            event.preventDefault();
+            $('#inbox input[type="checkbox"]').click();
+          });
+
+          $('#starred-checkall').click(function(event){
+            event.preventDefault();
+            $('#starred input[type="checkbox"]').click();
+          });
+
+          $('#sent-checkall').click(function(event){
+            event.preventDefault();
+            $('#sent input[type="checkbox"]').click();
+          });
+
+          $('#drafts-checkall').click(function(event){
+            event.preventDefault();
+            $('#drafts input[type="checkbox"]').click();
+          });
+
+          $('#trash-checkall').click(function(event){
+            event.preventDefault();
+            $('#trash input[type="checkbox"]').click();
+          });
+
+          $('a.read-link').click(function(event){
+            event.preventDefault();
+
+            $('ul.nav-tabs').children().removeClass("active");
+            $('div.tab-content').children().removeClass("active");
+            $('div#readpane').addClass("active");
+          });
+        });
+      <% end %>
+
 
     </div> <!-- /.tab-content content -->
   </div> <!-- /.tabbable tabs-left -->

@@ -9,6 +9,7 @@ class EmailsController < ApplicationController
     if params[:commit] == 'send'
       @email.box = 3
       #ship_mail(@email)
+      @email.date = DateTime.current().to_s
       if @email.save
         @email.update_attributes(box: 2)
         flash[:success] = "Mail Sent"
@@ -74,7 +75,14 @@ class EmailsController < ApplicationController
   def deletemany
     #current_user.emails.destroy_all(conditions: {id: params[:emails]})
     @these = current_user.emails.find(dm_params)
-    @these.each { |t| t.destroy }
+    if params[:mailbox] == 'trash'
+      @these.each { |t| t.destroy }
+    else
+      @these.each do |t|
+        t.box = 4
+        t.save
+      end
+    end
     redirect_to current_user
   end
 
@@ -85,11 +93,11 @@ class EmailsController < ApplicationController
     end
 
     def read_params
-      params.require(:id)
+      params.permit(:id)
     end
 
     def dm_params
-      params.require(:emails)
+      params.permit(:emails)
     end
 
     def ship_mail(outgoing)
