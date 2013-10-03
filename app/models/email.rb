@@ -15,11 +15,8 @@ class Email
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :from, presence: true, format: { with: VALID_EMAIL_REGEX }
   validates :to,   presence: true, format: { with: VALID_EMAIL_REGEX }
-  # note: this change means we have to validate presence before sending
-  # validates :from, format: { with: VALID_EMAIL_REGEX }
-  # validates :to,   format: { with: VALID_EMAIL_REGEX }
 
   embedded_in :user
 
-  #default_scope order_by(updated_at: :desc)
+  scope :by_age, order_by(updated_at: :desc)
 end

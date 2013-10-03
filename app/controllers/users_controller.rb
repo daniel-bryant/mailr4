@@ -9,19 +9,11 @@ class UsersController < ApplicationController
     retrieve_mail
 
     #sets of emails
-    @in_arr = Array.new
-    @star_arr = Array.new
-    @out_arr = Array.new
-    @draft_arr = Array.new
-    @trash_arr = Array.new
-
-    @user.emails.each do |m|
-      @in_arr.push(m) if m.box == 1
-      @star_arr.push(m) if m.star == true
-      @out_arr.push(m) if m.box == 2
-      @draft_arr.push(m) if m.box == 3    
-      @trash_arr.push(m) if m.box == 4
-    end
+    @in_arr = @user.emails.where(box: 1).by_age
+    @star_arr = @user.emails.where(star: true).by_age
+    @out_arr = @user.emails.where(box: 2).by_age
+    @draft_arr = @user.emails.where(box: 3).by_age
+    @trash_arr = @user.emails.where(box: 4).by_age
 
     @in_mails = @in_arr.paginate(page: params[:in_page])
     @star_mails = @star_arr.paginate(page: params[:star_page])
@@ -96,7 +88,7 @@ class UsersController < ApplicationController
       #                                         is_new: true
       #  @some_mail.save
       #end
-      #@some_mail = @user.emails.build box: 1, from: "dan@test.com", to: "dan@test.com", subject: "hello", body: "this is the body", is_new: true
+      #@some_mail = @user.emails.build box: 1, from: "dan@test.com", to: "daniel@example.com", subject: "hello", body: "this is the body", is_new: true
       #@some_mail.save
     end
 end
