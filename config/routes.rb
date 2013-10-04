@@ -1,12 +1,17 @@
 Mailr4::Application.routes.draw do
-  resources :users
+  resources :users do
+    member do
+      get 'inbox'
+      get 'starred'
+      get 'sent'
+      get 'drafts'
+      get 'trash'
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
-  resources :emails,   only: [:create, :edit, :update, :destroy] do
+  resources :emails,   only: [:create, :show, :edit, :update, :destroy] do
     collection do
       delete 'deletemany'
-    end
-    member do
-      put 'read'
     end
   end
   root 'sessions#new'

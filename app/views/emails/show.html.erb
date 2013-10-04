@@ -1,0 +1,13 @@
+<% provide(:title, 'mail') %>
+<div id="mail-wrap">
+  <h4>From: <%= @email.from %></h4>
+  <h4>To: <%= @email.to %></h4>
+  <h4>Subject: <%= @email.subject %></h4>
+
+  <div>
+    <%= @email.body %>
+  </div>
+  <div class="bottom-clear"></div>
+
+</div><!-- /#mail-wrap -->
+

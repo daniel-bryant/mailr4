@@ -1,0 +1,10 @@
+<div class="sidebar">
+  <ul>
+    <li><a class="compose-link btn btn-primary" data-toggle="modal" href="#newModal">Compose</a></li>
+    <li><%= link_to "Inbox#{count_in_paren(current_user.emails.where(box: 1).count)}", inbox_user_path(current_user) %></li>
+    <li><%= link_to "Starred#{count_in_paren(current_user.emails.where(star: true).count)}", starred_user_path(current_user) %></li>
+    <li><%= link_to "Sent#{count_in_paren(current_user.emails.where(box: 2).count)}", sent_user_path(current_user) %></li>
+    <li><%= link_to "Drafts#{count_in_paren(current_user.emails.where(box: 3).count)}", drafts_user_path(current_user) %></li>
+    <li><%= link_to "Trash#{count_in_paren(current_user.emails.where(box: 4).count)}", trash_user_path(current_user) %></li>
+  </ul>
+</div>

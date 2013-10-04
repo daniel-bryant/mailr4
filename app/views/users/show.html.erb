@@ -1,115 +1,9 @@
 <% provide(:title, 'mail') %>
 <div id="mail-wrap">
-  <div id="button-row">
-    <div class="sidebar">
-      <a class="compose-link btn btn-primary" data-toggle="modal" href="#readModal">Compose</a>
-    </div>
-  </div>
-
-  <div class="tabbable tabs-left">
-    <ul class="nav nav-tabs sidebar">
-      <li class="active"><a href="#inbox" data-toggle="tab">Inbox<%= count_in_paren(@in_mails.count) %></a></li>
-      <li><a href="#starred" data-toggle="tab">Starred<%= count_in_paren(@star_mails.count) %></a></li>
-      <li><a href="#sent" data-toggle="tab">Sent<%= count_in_paren(@out_mails.count) %></a></li>
-      <li><a href="#drafts" data-toggle="tab">Drafts<%= count_in_paren(@draft_mails.count) %></a></li>
-      <li><a href="#trash" data-toggle="tab">Trash<%= count_in_paren(@trash_mails.count) %></a></li>
-    </ul>
-
-    <div class="tab-content content">
-      <div id="inbox" class="tab-pane active">
-        <% if @in_mails.any? %>
+        <% if @box_mails.any? %>
           <%= form_tag deletemany_emails_path, method: :delete do %>
-            <%= hidden_field_tag 'mailbox', 'other' %>
             <div class="action-btns">
-              <%= button_tag type: "button", id: "inbox-checkall", class: "btn" do %>
-                <i class="icon-ok"></i>
-              <% end %>
-              <%= button_tag type: "submit", class: "btn" do %>
-                <i class="icon-trash"></i>
-              <% end %>
-            </div>
-            <ol class="emails">
-              <%= render @in_mails %>
-            </ol>
-            <%= will_paginate @in_mails, param_name: :in_page %>
-          <% end %>
-        <% else %>
-          <div class="center">Nothing here</div>
-        <% end %>
-      </div>
-
-      <div id="starred" class="tab-pane">
-        <% if @star_mails.any? %>
-          <%= form_tag deletemany_emails_path, method: :delete do %>
-            <%= hidden_field_tag 'mailbox', 'other' %>
-            <div class="action-btns">
-              <%= button_tag type: "button", id: "starred-checkall", class: "btn" do %>
-                <i class="icon-ok"></i>
-              <% end %>
-              <%= button_tag type: "submit", class: "btn" do %>
-                <i class="icon-trash"></i>
-              <% end %>
-            </div>
-            <ol class="emails">
-              <%= render @star_mails %>
-            </ol>
-            <%= will_paginate @star_mails, param_name: :star_page %>
-          <% end %>
-        <% else %>
-          <div class="center">Nothing here</div>
-        <% end %>
-      </div>
-
-      <div id="sent" class="tab-pane">
-        <% if @out_mails.any? %>
-          <%= form_tag deletemany_emails_path, method: :delete do %>
-            <%= hidden_field_tag 'mailbox', 'other' %>
-            <div class="action-btns">
-              <%= button_tag type: "button", id: "sent-checkall", class: "btn" do %>
-                <i class="icon-ok"></i>
-              <% end %>
-              <%= button_tag type: "submit", class: "btn" do %>
-                <i class="icon-trash"></i>
-              <% end %>
-            </div>
-            <ol class="emails">
-              <%= render @out_mails %>
-            </ol>
-            <%= will_paginate @out_mails, param_name: :out_page %>
-          <% end %>
-        <% else %>
-          <div class="center">Nothing here</div>
-        <% end %>
-      </div>
-
-      <div id="drafts" class="tab-pane">
-        <% if @draft_mails.any? %>
-          <%= form_tag deletemany_emails_path, method: :delete do %>
-            <%= hidden_field_tag 'mailbox', 'other' %>
-            <div class="action-btns">
-              <%= button_tag type: "button", id: "drafts-checkall", class: "btn" do %>
-                <i class="icon-ok"></i>
-              <% end %>
-              <%= button_tag type: "submit", class: "btn" do %>
-                <i class="icon-trash"></i>
-              <% end %>
-            </div>
-            <ol class="emails">
-              <%= render @draft_mails %>
-            </ol>
-            <%= will_paginate @draft_mails, param_name: :draft_page %>
-          <% end %>
-        <% else %>
-          <div class="center">Nothing here</div>
-        <% end %>
-      </div>
-
-      <div id="trash" class="tab-pane">
-        <% if @trash_mails.any? %>
-          <%= form_tag deletemany_emails_path, method: :delete do %>
-            <%= hidden_field_tag 'mailbox', 'trash' %>
-            <div class="action-btns">
-              <%= button_tag type: "button", id: "trash-checkall", class: "btn" do %>
+              <%= button_tag type: "button", id: "checkall", class: "btn" do %>
                 <i class="icon-ok"></i>
               <% end %>
               <%= button_tag type: "submit", data: {confirm: 'Delete Permanently?'}, class: "btn" do %>
@@ -117,95 +11,24 @@
               <% end %>
             </div>
             <ol class="emails">
-              <%= render @trash_mails %>
+              <%= render @box_mails %>
             </ol>
-            <%= will_paginate @trash_mails, param_name: :trash_page %>
+            <%= will_paginate @box_mails, param_name: :box_page %>
           <% end %>
         <% else %>
           <div class="center">Nothing here</div>
         <% end %>
-      </div>
 
-      <div id="readpane" class="tab-pane">
-        <h4 id="read-form-from"></h4>
-        <h4 id="read-form-to"></h4>
-        <h4 id="read-form-subject"></h4>
-        <div id="read-form-body" style="margin-bottom: 20px"></div>
-        <%= render 'users/reply_form' %>
-      </div>
-
-      <%= javascript_tag do %>
-        $(function() {
-          $('#inbox-checkall').click(function(event){
-            event.preventDefault();
-            $('#inbox input[type="checkbox"]').click();
-          });
-
-          $('#starred-checkall').click(function(event){
-            event.preventDefault();
-            $('#starred input[type="checkbox"]').click();
-          });
-
-          $('#sent-checkall').click(function(event){
-            event.preventDefault();
-            $('#sent input[type="checkbox"]').click();
-          });
-
-          $('#drafts-checkall').click(function(event){
-            event.preventDefault();
-            $('#drafts input[type="checkbox"]').click();
-          });
-
-          $('#trash-checkall').click(function(event){
-            event.preventDefault();
-            $('#trash input[type="checkbox"]').click();
-          });
-
-          $('a.read-link').click(function(event){
-            event.preventDefault();
-
-            $('ul.nav-tabs').children().removeClass("active");
-            $('div.tab-content').children().removeClass("active");
-            $('div#readpane').addClass("active");
-          });
-        });
-      <% end %>
-
-
-    </div> <!-- /.tab-content content -->
-  </div> <!-- /.tabbable tabs-left -->
-
-  <div class="bottom-clear"></div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="readModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">New Message</h4>
-        </div>
-        <div class="modal-body">
-          <%= render 'users/compose_form' %>
-        </div>
-        <div class="modal-footer">
-          <button id="clear-btn" type="button" class="btn btn-default" >Clear</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <%= javascript_tag do %>
-            $(function() {
-		          $('button#clear-btn').click(function(event){
-		            event.preventDefault();
-
-		            $('input#email_new_to').val("");
-		            $('input#email_new_subject').val("");
-		            $('textarea#email_new_body').val("");
-		          });
+        <%= javascript_tag do %>
+          $(function() {
+            $('#checkall').click(function(event){
+              event.preventDefault();
+              $('#mail-wrap input[type="checkbox"]').click();
             });
-	        <% end %>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+          });
+        <% end %>
+
+        <div class="bottom-clear"></div>
 
 </div><!-- /#mail-wrap -->
 

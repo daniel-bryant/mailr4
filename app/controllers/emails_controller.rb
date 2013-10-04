@@ -2,6 +2,11 @@ class EmailsController < ApplicationController
   before_action :signed_in_email, only: [:edit, :update]
   before_action :correct_email,  only: [:edit, :update]
 
+  def show
+    @email = current_user.emails.find(params[:id])
+    @email.update_attributes(is_new: false)
+  end
+
   def create
     @email = current_user.emails.build(email_params)
     @err = true
@@ -68,24 +73,19 @@ class EmailsController < ApplicationController
     redirect_to current_user
   end
 
-  def read
-    @read_this = current_user.emails.find(read_params)
-    @read_this.update_attributes(is_new: nil)
-  end
-
   def deletemany
     @these = current_user.emails.find(dm_params)
     if (@these.kind_of?(Array))
-      if params[:mailbox] == 'trash'
-        @these.each { |t| t.destroy }
-      else
-        @these.each do |t|
+      @these.each do |t|
+        if t.box == 4
+          t.destroy
+        else
           t.box = 4
           t.save
         end
       end
     elsif (!(@these.nil?))
-      if params[:mailbox] == 'trash'
+      if @these.box == 4
         @these.destroy
       else
         @these.box = 4
@@ -101,10 +101,6 @@ class EmailsController < ApplicationController
 
     def email_params
       params.require(:email).permit(:box, :star, :from, :to, :subject, :body, :date, :is_new)
-    end
-
-    def read_params
-      params.permit(:id)
     end
 
     def dm_params

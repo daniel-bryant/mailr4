@@ -7,23 +7,52 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     retrieve_mail
-
-    #sets of emails
-    @in_arr = @user.emails.where(box: 1).by_age
-    @star_arr = @user.emails.where(star: true).by_age
-    @out_arr = @user.emails.where(box: 2).by_age
-    @draft_arr = @user.emails.where(box: 3).by_age
-    @trash_arr = @user.emails.where(box: 4).by_age
-
-    @in_mails = @in_arr.paginate(page: params[:in_page])
-    @star_mails = @star_arr.paginate(page: params[:star_page])
-    @out_mails = @out_arr.paginate(page: params[:out_page])
-    @draft_mails = @draft_arr.paginate(page: params[:draft_page])
-    @trash_mails = @trash_arr.paginate(page: params[:trash_page])
+    @box_arr = @user.emails.where(box: 1).by_age
+    @box_mails = @box_arr.paginate(page: params[:box_page])
 
     #single email
-    @new_mail = @user.emails.build if signed_in?
-    @reply_mail = @user.emails.build if signed_in?
+    #@new_mail = @user.emails.build if signed_in?
+    #@reply_mail = @user.emails.build if signed_in?
+  end
+
+  def inbox
+    @user = User.find(params[:id])
+    retrieve_mail
+    @box_arr = @user.emails.where(box: 1).by_age
+    @box_mails = @box_arr.paginate(page: params[:box_page])
+    render 'show'
+  end
+
+  def starred
+    @user = User.find(params[:id])
+    retrieve_mail
+    @box_arr = @user.emails.where(star: true).by_age
+    @box_mails = @box_arr.paginate(page: params[:box_page])
+    render 'show'
+  end
+
+  def sent
+    @user = User.find(params[:id])
+    retrieve_mail
+    @box_arr = @user.emails.where(box: 2).by_age
+    @box_mails = @box_arr.paginate(page: params[:box_page])
+    render 'show'
+  end
+
+  def drafts
+    @user = User.find(params[:id])
+    retrieve_mail
+    @box_arr = @user.emails.where(box: 3).by_age
+    @box_mails = @box_arr.paginate(page: params[:box_page])
+    render 'show'
+  end
+
+  def trash
+    @user = User.find(params[:id])
+    retrieve_mail
+    @box_arr = @user.emails.where(box: 4).by_age
+    @box_mails = @box_arr.paginate(page: params[:box_page])
+    render 'show'
   end
 
   def new
