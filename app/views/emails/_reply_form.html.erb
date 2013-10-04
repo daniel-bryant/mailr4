@@ -1,15 +1,13 @@
-<%= form_for(@reply_mail, index: "reply") do |f| %>
+<%= form_for(@reply_mail) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
   <%= f.hidden_field :from, value: "#{current_user.name}@#{CONFIG['domain']}" %>
 
-  <%= f.hidden_field :to %>
+  <%= f.hidden_field :to, value: (@email.box==1) ? @email.from : @email.to %>
 
-  <%= f.hidden_field :subject %>
+  <%= f.hidden_field :subject, value: @email.subject %>
 
-  <div class="field">
-    <%= f.text_area :body, placeholder: "Quickreply", rows: 5 %>
-  </div>
+  <%= f.text_area :body, placeholder: "Quickreply", rows: 5 %>
 
   <%= f.submit 'send', class: "btn btn-success" %>
   <%= f.submit 'save', class: "btn" %>

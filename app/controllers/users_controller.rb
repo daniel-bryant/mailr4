@@ -9,50 +9,27 @@ class UsersController < ApplicationController
     retrieve_mail
     @box_arr = @user.emails.where(box: 1).by_age
     @box_mails = @box_arr.paginate(page: params[:box_page])
-
-    #single email
-    #@new_mail = @user.emails.build if signed_in?
-    #@reply_mail = @user.emails.build if signed_in?
+    @new_mail = @user.emails.build if signed_in?
   end
 
   def inbox
-    @user = User.find(params[:id])
-    retrieve_mail
-    @box_arr = @user.emails.where(box: 1).by_age
-    @box_mails = @box_arr.paginate(page: params[:box_page])
-    render 'show'
+    setup_mailbox(box: 1)
   end
 
   def starred
-    @user = User.find(params[:id])
-    retrieve_mail
-    @box_arr = @user.emails.where(star: true).by_age
-    @box_mails = @box_arr.paginate(page: params[:box_page])
-    render 'show'
+    setup_mailbox(star: true)
   end
 
   def sent
-    @user = User.find(params[:id])
-    retrieve_mail
-    @box_arr = @user.emails.where(box: 2).by_age
-    @box_mails = @box_arr.paginate(page: params[:box_page])
-    render 'show'
+    setup_mailbox(box: 2)
   end
 
   def drafts
-    @user = User.find(params[:id])
-    retrieve_mail
-    @box_arr = @user.emails.where(box: 3).by_age
-    @box_mails = @box_arr.paginate(page: params[:box_page])
-    render 'show'
+    setup_mailbox(box: 3)
   end
 
   def trash
-    @user = User.find(params[:id])
-    retrieve_mail
-    @box_arr = @user.emails.where(box: 4).by_age
-    @box_mails = @box_arr.paginate(page: params[:box_page])
-    render 'show'
+    setup_mailbox(box: 4)
   end
 
   def new
@@ -71,6 +48,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @new_mail = @user.emails.build if signed_in?
   end
 
   def update
@@ -95,6 +73,15 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
+    end
+
+    def setup_mailbox(condition)
+      @user = User.find(params[:id])
+      retrieve_mail
+      @box_arr = @user.emails.where(condition).by_age
+      @box_mails = @box_arr.paginate(page: params[:box_page])
+      @new_mail = @user.emails.build if signed_in?
+      render 'show'
     end
 
     def retrieve_mail

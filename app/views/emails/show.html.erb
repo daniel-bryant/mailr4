@@ -7,6 +7,10 @@
   <div>
     <%= @email.body %>
   </div>
+
+  <% if (@email.box==1 || @email.box==2) %>
+    <%= render 'emails/reply_form' %>
+  <% end %>
   <div class="bottom-clear"></div>
 
 </div><!-- /#mail-wrap -->

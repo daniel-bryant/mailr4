@@ -1,6 +1,6 @@
 <div class="sidebar">
   <ul>
-    <li><a class="compose-link btn btn-primary" data-toggle="modal" href="#newModal">Compose</a></li>
+    <li><a class="compose-link btn btn-primary" data-toggle="modal" href="#composeModal">Compose</a></li>
     <li><%= link_to "Inbox#{count_in_paren(current_user.emails.where(box: 1).count)}", inbox_user_path(current_user) %></li>
     <li><%= link_to "Starred#{count_in_paren(current_user.emails.where(star: true).count)}", starred_user_path(current_user) %></li>
     <li><%= link_to "Sent#{count_in_paren(current_user.emails.where(box: 2).count)}", sent_user_path(current_user) %></li>
@@ -8,3 +8,38 @@
     <li><%= link_to "Trash#{count_in_paren(current_user.emails.where(box: 4).count)}", trash_user_path(current_user) %></li>
   </ul>
 </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="composeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">New Message</h4>
+        </div>
+        <div class="modal-body">
+
+          <%= form_for(@new_mail) do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+
+            <%= f.hidden_field :from, value: "#{current_user.name}@#{CONFIG['domain']}" %>
+
+            <%= f.text_field :to, placeholder: "To" %>
+
+            <%= f.text_field :subject, placeholder: "Subject" %>
+
+            <div class="field">
+              <%= f.text_area :body, placeholder: "Compose email...", rows: 10 %>
+            </div>
+
+            <%= f.submit 'send', class: "btn btn-success" %>
+            <%= f.submit 'save', class: "btn" %>
+          <% end %>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->

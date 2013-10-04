@@ -5,6 +5,8 @@ class EmailsController < ApplicationController
   def show
     @email = current_user.emails.find(params[:id])
     @email.update_attributes(is_new: false)
+    @new_mail = current_user.emails.build if signed_in?
+    @reply_mail = current_user.emails.build if signed_in?
   end
 
   def create
@@ -14,7 +16,6 @@ class EmailsController < ApplicationController
     if params[:commit] == 'send'
       @email.box = 3
       #ship_mail(@email)
-      #@email.date = DateTime.current().to_s
       if @email.save
         @email.update_attributes(box: 2)
         flash[:success] = "Mail Sent"
@@ -33,12 +34,12 @@ class EmailsController < ApplicationController
     end
 
     if @err
-      #render 'edit'
-      render text: email_params.to_s
+      render 'edit'
     end
   end
 
   def edit
+    @new_mail = current_user.emails.build if signed_in?
   end
 
   def update
@@ -74,26 +75,15 @@ class EmailsController < ApplicationController
   end
 
   def deletemany
-    @these = current_user.emails.find(dm_params)
-    if (@these.kind_of?(Array))
-      @these.each do |t|
-        if t.box == 4
-          t.destroy
-        else
-          t.box = 4
-          t.save
-        end
-      end
-    elsif (!(@these.nil?))
-      if @these.box == 4
-        @these.destroy
+    @to_delete = current_user.emails.find(dm_params)
+    @to_delete.each do |t|
+      if t.box == 4
+        t.destroy
       else
-        @these.box = 4
-        @these.save
+        t.box = 4
+        t.save
       end
-    else
-      # do nothing for now. may want to handle
-    end
+    end 
     redirect_to current_user
   end
 
@@ -104,7 +94,7 @@ class EmailsController < ApplicationController
     end
 
     def dm_params
-      params.permit(:emails)
+      params.require(:emails)
     end
 
     def ship_mail(outgoing)

@@ -1,34 +1,31 @@
 <% provide(:title, 'mail') %>
 <div id="mail-wrap">
-        <% if @box_mails.any? %>
-          <%= form_tag deletemany_emails_path, method: :delete do %>
-            <div class="action-btns">
-              <%= button_tag type: "button", id: "checkall", class: "btn" do %>
-                <i class="icon-ok"></i>
-              <% end %>
-              <%= button_tag type: "submit", data: {confirm: 'Delete Permanently?'}, class: "btn" do %>
-                <i class="icon-trash"></i>
-              <% end %>
-            </div>
-            <ol class="emails">
-              <%= render @box_mails %>
-            </ol>
-            <%= will_paginate @box_mails, param_name: :box_page %>
-          <% end %>
-        <% else %>
-          <div class="center">Nothing here</div>
+  <% if @box_mails.any? %>
+    <%= form_tag deletemany_emails_path, method: :delete do %>
+      <div class="action-btns">
+        <%= button_tag type: "button", id: "checkall", class: "btn" do %>
+          <i class="icon-ok"></i>
         <% end %>
-
-        <%= javascript_tag do %>
-          $(function() {
-            $('#checkall').click(function(event){
-              event.preventDefault();
-              $('#mail-wrap input[type="checkbox"]').click();
-            });
-          });
+        <%= button_tag type: "submit", data: {confirm: 'Delete Permanently?'}, class: "btn" do %>
+          <i class="icon-trash"></i>
         <% end %>
-
-        <div class="bottom-clear"></div>
-
-</div><!-- /#mail-wrap -->
+      </div>
+      <ol class="emails">
+        <%= render @box_mails %>
+      </ol>
+      <%= will_paginate @box_mails, param_name: :box_page %>
+    <% end %>
+  <% else %>
+    <div class="center">Nothing here</div>
+  <% end %>
+  <%= javascript_tag do %>
+    $(function() {
+      $('#checkall').click(function(event){
+        event.preventDefault();
+        $('#mail-wrap input[type="checkbox"]').click();
+      });
+    });
+  <% end %>
+  <div class="bottom-clear"></div>
+<div><!-- /#mail-wrap -->
 
