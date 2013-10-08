@@ -86,7 +86,7 @@ class UsersController < ApplicationController
 
     def retrieve_mail
       Mail.defaults do
-        retriever_method :pop3, :address    => "pop.gmail.com",
+        retriever_method :pop3, :address    => "#{ CONFIG['pop-server'] }",
                                 :port       => 995,
                                 :user_name  => 'bryant.daniel.j@gmail.com',
                                 :password   => '',

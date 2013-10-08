@@ -1,8 +1,11 @@
 production:
-    domain: example.com
+  domain: example.com
+  pop-server: pop.gmail.com
 
 development:
-    domain: example.com
+  domain: example.com
+  pop-server: pop.gmail.com
 
 test:
-    domain: example.com
+  domain: example.com
+  pop-server: pop.gmail.com
